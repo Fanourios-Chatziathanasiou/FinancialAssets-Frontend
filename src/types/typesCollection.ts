@@ -20,13 +20,13 @@ export type assetDataType = {
         "exchange_timezone":string,
         "type":string
     }
-    "values": {
+    "values": [{
         "id":string
-        "datetime":string
+        "datetime":string | any
         "open":string
         "high":string
         "low":string
         "close":string
         "volume":string
-    }
+    }]
 }

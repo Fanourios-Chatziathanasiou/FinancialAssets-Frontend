@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { PriceChart } from "../src/components/chart/PriceChart";
 import Searchbar from "../src/components/searchBar/SearchBar";
 import SearchResultsCard from "../src/components/searchResults/SearchResultsCard";
 

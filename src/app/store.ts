@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { Middleware } from 'next/dist/lib/load-custom-routes'
 import {searchInputSlice} from '../features/searchInputSlice'
 import { assetDataApi } from '../services/assetDataApi'
 import { searchAssetsApi } from '../services/searchAssetsApi'

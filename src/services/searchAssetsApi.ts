@@ -12,6 +12,7 @@ export const searchAssetsApi = createApi({
     getSearchAssetsByName: builder.query<searchAssetsType[], string>({
       query: (name)=>`${name}`
     }),
+    
   }),
 })
 
