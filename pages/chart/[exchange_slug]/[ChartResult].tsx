@@ -6,6 +6,7 @@ import { PriceChart } from "../../../src/components/chart/PriceChart";
 import { useAppDispatch, useAppSelector } from "../../../src/app/hooks";
 import { updateDataset } from "../../../src/features/datasetSlice";
 import { Daily } from "../../../src/components/chart/PriceChart2";
+import StockChart from "../../../src/components/chart/StockChart";
 
 const ChartResult = () => {
 	const router = useRouter();
@@ -24,12 +25,11 @@ const ChartResult = () => {
 			dispatch(updateDataset(dataCopy));
 		}
 	}, [isSuccess]);
-
-	console.log(dataset);
+	let newData = dataset.values?.map((item) => Object.assign({}, item, { selected: false }));
 	const parseDate = timeParse("%Y-%m-%d");
 	return (
 		<div style={{ height: "100%", width: "100%", paddingTop: "2rem" }}>
-			{dataset.values && isSuccess ? <Daily data={dataset.values} /> : ""}
+			{dataset.values && isSuccess === true ? <StockChart data={newData} /> : ""}
 		</div>
 	);
 };

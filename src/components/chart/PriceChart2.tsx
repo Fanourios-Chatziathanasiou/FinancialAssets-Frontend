@@ -4,8 +4,10 @@ import { XAxis, YAxis } from "react-financial-charts";
 import { discontinuousTimeScaleProviderBuilder } from "react-financial-charts";
 import { CandlestickSeries } from "react-financial-charts";
 import { withDeviceRatio, withSize } from "react-financial-charts";
+import { useAppSelector } from "../../app/hooks";
 import { candlestickValueType } from "../../types/typesCollection";
-import OHLCTooltip from "./OHLCTooltip";
+import { IOHLCData } from "./iOHLCData";
+import { withOHLCData } from "./withOHLCData";
 
 interface ChartProps {
 	readonly data: candlestickValueType[];
@@ -80,6 +82,6 @@ class BasicCandlestick extends React.Component<ChartProps> {
 	};
 }
 
-export const Daily = withSize({ style: { minHeight: 600 } })(withDeviceRatio()(BasicCandlestick));
+export const Daily = withOHLCData("DAILY")(withSize({ style: { minHeight: 600 } })(withDeviceRatio()(BasicCandlestick)));
 
 // export const Intraday = withSize({ style: { minHeight: 600 } })(withDeviceRatio()(BasicCandlestick));
