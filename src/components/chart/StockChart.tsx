@@ -1,5 +1,5 @@
 import { format } from "d3-format";
-import { timeFormat } from "d3-time-format";
+import { timeFormat, timeParse } from "d3-time-format";
 import * as React from "react";
 import {
 	elderRay,
@@ -46,7 +46,8 @@ const axisStyles = {
 };
 
 const coordinateStyles = {
-	fill: "#FFFFFF",
+	fill: "#383E55",
+	textFill: "#FFFFFF",
 };
 
 const zoomButtonStyles = {
@@ -59,6 +60,20 @@ const zoomButtonStyles = {
 const crossHairStyles = {
 	strokeStyle: "#9EAAC7",
 };
+const parseDate = timeParse("%Y-%m-%d");
+
+const parseData = () => (d) => {
+	const date = parseDate(d.date);
+	date ? (d.datetime = new Date(date)) : (d.datetime = new Date(Number(d.datetime)));
+
+	for (const key in d) {
+		if (key !== "date" && Object.prototype.hasOwnProperty.call(d, key)) {
+			d[key] = +d[key];
+		}
+	}
+
+	return d;
+};
 
 class StockChart extends React.Component<StockChartProps> {
 	private readonly margin = { left: 0, right: 48, top: 20, bottom: 24 };
@@ -66,7 +81,7 @@ class StockChart extends React.Component<StockChartProps> {
 	private readonly xScaleProvider = discontinuousTimeScaleProviderBuilder().inputDateAccessor((d: IOHLCData) => d.datetime);
 
 	public render() {
-		const { data: initialData, dateTimeFormat = "%d %b", height, ratio, width } = this.props;
+		const { data: initialData, dateTimeFormat = "%Y-%m-%d", height, ratio, width } = this.props;
 
 		const ema12 = ema()
 			.id(1)
@@ -90,7 +105,7 @@ class StockChart extends React.Component<StockChartProps> {
 
 		const { margin, xScaleProvider } = this;
 
-		const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(initialData);
+		const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(calculatedData);
 
 		const max = xAccessor(data[data.length - 1]);
 		const min = xAccessor(data[Math.max(0, data.length - 100)]);
@@ -129,14 +144,15 @@ class StockChart extends React.Component<StockChartProps> {
 					yExtents={this.candleChartExtents}
 					padding={{ top: 20, bottom: 70, left: 0, right: 0 }}
 				>
-					<XAxis {...axisStyles} showGridLines showTicks={false} showTickLabel={false} />
+					<XAxis {...axisStyles} showGridLines showTicks={true} showTickLabel={true} />
 					<YAxis {...axisStyles} showGridLines tickFormat={this.pricesDisplayFormat} />
 					<CandlestickSeries />
 					<LineSeries yAccessor={ema26.accessor()} strokeStyle={ema26.stroke()} />
 					<CurrentCoordinate yAccessor={ema26.accessor()} fillStyle={ema26.stroke()} />
 					<LineSeries yAccessor={ema12.accessor()} strokeStyle={ema12.stroke()} />
 					<CurrentCoordinate yAccessor={ema12.accessor()} fillStyle={ema12.stroke()} />
-					<MouseCoordinateY rectWidth={margin.right} displayFormat={this.pricesDisplayFormat} />
+					<MouseCoordinateY rectWidth={margin.right} displayFormat={this.pricesDisplayFormat} {...coordinateStyles} />
+					<MouseCoordinateX displayFormat={timeDisplayFormat} {...coordinateStyles} />
 					<EdgeIndicator
 						itemType="last"
 						rectWidth={margin.right}
@@ -147,6 +163,7 @@ class StockChart extends React.Component<StockChartProps> {
 					/>
 					<MovingAverageTooltip
 						origin={[8, 24]}
+						textFill={"#FFFFFF"}
 						options={[
 							{
 								yAccessor: ema26.accessor(),
