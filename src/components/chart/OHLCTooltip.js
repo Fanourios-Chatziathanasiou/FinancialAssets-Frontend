@@ -57,12 +57,14 @@ class OHLCTooltip extends Component {
 		if (currentItem !== undefined && accessor !== undefined) {
 			const item = accessor(currentItem);
 			if (item !== undefined) {
-				open = ohlcFormat(item.open);
-				high = ohlcFormat(item.high);
-				low = ohlcFormat(item.low);
-				close = ohlcFormat(item.close);
-				change = `${changeFormat(item.close - item.open)} (${percentFormat((item.close - item.open) / item.open)})`;
-				volume = volumeFormat(item.volume);
+				open = ohlcFormat(Number(item.open));
+				high = ohlcFormat(Number(item.high));
+				low = ohlcFormat(Number(item.low));
+				close = ohlcFormat(Number(item.close));
+				change = `${changeFormat(Number(item.close) - Number(item.open))} (${percentFormat(
+					(Number(item.close) - Number(item.open)) / Number(item.open)
+				)})`;
+				volume = volumeFormat(Number(item.volume));
 			}
 		}
 

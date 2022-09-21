@@ -6,7 +6,7 @@ const parseDate = timeParse("%Y-%m-%d");
 
 const parseData = () => (d) => {
 	const date = parseDate(d.date);
-	date ? (d.date = new Date(date)) : (d.date = new Date(Number(d.date)));
+	date ? (d.datetime = new Date(date)) : (d.datetime = new Date(Number(d.datetime)));
 
 	for (const key in d) {
 		if (key !== "date" && Object.prototype.hasOwnProperty.call(d, key)) {

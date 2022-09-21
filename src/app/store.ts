@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import {datasetSlice} from '../features/datasetSlice'
 import {searchInputSlice} from '../features/searchInputSlice'
 import { assetDataApi } from '../services/assetDataApi'
 import { searchAssetsApi } from '../services/searchAssetsApi'
@@ -7,6 +8,7 @@ import { searchAssetsApi } from '../services/searchAssetsApi'
 export const store = configureStore({
   reducer: {
      searchInput: searchInputSlice.reducer,
+     dataset: datasetSlice.reducer,
      [searchAssetsApi.reducerPath]: searchAssetsApi.reducer,
      [assetDataApi.reducerPath]: assetDataApi.reducer
 

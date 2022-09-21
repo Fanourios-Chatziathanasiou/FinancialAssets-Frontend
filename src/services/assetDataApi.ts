@@ -8,12 +8,17 @@ export const assetDataApi = createApi({
   reducerPath: 'assetData',
   baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_ASSETDATA_API_ENDPOINT}` }),
   endpoints: (builder) => ({
-    
+
     getAssetDataByName: builder.query<assetDataType, string>({
-      query: (name)=>`/symbol=${name}&interval=1day`,
-    
+      query: (name) => `/symbol=${name}&interval=1day`,
+      // transformResponse: (response:assetDataType):assetDataType => {
+      //   response.values.forEach((element,index,arr)=>{
+      //     arr[index].datetime = new Date(arr[index].datetime)
+      //   })
+      //   return response;
+      // }
     }),
-    
+
   }),
 })
 
