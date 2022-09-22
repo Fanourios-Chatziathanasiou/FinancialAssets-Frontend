@@ -10,7 +10,7 @@ const SearchResults = () => {
 	const { data } = useGetSearchAssetsByNameQuery(SearchResults);
 
 	return (
-		<div className="max-w-[100%] grid grid-cols-auto-fit justify-items-center align-center py-24" style={{ gap: "30px" }}>
+		<div className="max-w-[100%] grid grid-cols-auto-fit justify-items-center align-center py-24 gap-36">
 			{data?.slice(0, 20).map((searchResultElement: searchAssetsType, index: number) => {
 				return (
 					<SearchResultsCard

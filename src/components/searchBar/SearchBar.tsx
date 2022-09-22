@@ -29,10 +29,9 @@ const SearchBar: React.FC<{}> = (props) => {
 	};
 
 	return (
-		<div className=" flex flex-col w-[100%] max-w-4xl h-screen max-h-[1280px]  items-center justify-center">
-			<h1>Financial Assets.</h1>
+		<div className=" flex flex-col w-[100%] h-[100%] max-w-4xl items-center justify-center  ">
 			<div
-				className="relative w-[100%] "
+				className="relative w-[100%] h-[100%] justify-self-start"
 				onFocus={() => {
 					if (isFocused === false) {
 						setIsFocused(true);
@@ -45,19 +44,22 @@ const SearchBar: React.FC<{}> = (props) => {
 					}
 				}}
 			>
-				<input
-					className=" w-[100%] p-2 rounded-lg text-base  font-poppins font-[400] border-[1px] border-black"
-					type="text"
-					defaultValue={""}
-					name=""
-					id=""
-					placeholder="Search FA by Ticker or Name..."
-					onChange={handleInputChange}
-					onKeyDown={handleKeyDown}
-				/>
-				<button type="button" className="p-0 absolute right-0  h-[100%]  ">
-					<img src="Assets/searchIcon.png" alt="asd" className="h-[100%] rounded-lg " />
-				</button>
+				<div className="w-[100%] flex bg-[rgb(248,248,248)] rounded-lg shadow-customwhite">
+					<input
+						className=" w-[92%] p-l-2  text-[2.6rem]  font-poppins font-[400]  rounded-l-lg border-none bg-[rgb(248,248,248)] "
+						type="text"
+						defaultValue={""}
+						name=""
+						id=""
+						placeholder="Search FA by Ticker or Name..."
+						onChange={handleInputChange}
+						onKeyDown={handleKeyDown}
+					/>
+					<button type="button" className="rounded-r-lg m-auto w-[6%]  border-none bg-none">
+						<img src="Assets/searchIcon.png" alt="asd" className="w-[100%] p-0 border-none bg-none " />
+					</button>
+				</div>
+
 				<SearchBarInputResults data={data} inputValue={inputValue} isFocused={isFocused} />
 			</div>
 		</div>

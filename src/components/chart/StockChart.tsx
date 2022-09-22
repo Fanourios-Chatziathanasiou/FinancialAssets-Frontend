@@ -76,8 +76,8 @@ const parseData = () => (d) => {
 };
 
 class StockChart extends React.Component<StockChartProps> {
-	private readonly margin = { left: 0, right: 48, top: 20, bottom: 24 };
-	private readonly pricesDisplayFormat = format(".2f");
+	private readonly margin = { left: 0, right: 58, top: 20, bottom: 24 };
+	private readonly pricesDisplayFormat = format(".3f");
 	private readonly xScaleProvider = discontinuousTimeScaleProviderBuilder().inputDateAccessor((d: IOHLCData) => d.datetime);
 
 	public render() {

@@ -14,7 +14,7 @@ export const SearchBarInputResults = React.memo(
 		return (
 			<>
 				{props.isFocused == true && props.data && props.data.length > 0 && props.inputValue !== "" ? (
-					<ul className="p-0  max-h-60 absolute mt-1 rounded-lg w-[100%] bg-white border-[1px] border-FA-Primary-blue-grey-900 overflow-y-scroll ">
+					<ul className="p-0  max-h-96 absolute mt-1 rounded-lg w-[100%] bg-white border-[1px] border-FA-Primary-blue-grey-900 overflow-y-scroll ">
 						{props.isFocused == true && props.data && props.data.length > 0
 							? props.data.slice(0, 10).map((obj: any, index: number) => {
 									return (
@@ -25,9 +25,9 @@ export const SearchBarInputResults = React.memo(
 										>
 											<li
 												key={index}
-												className=" p-2 border-[1px]  font-[300] border-FA-Primary-blue-grey-400 text-sm hover:bg-FA-Primary-purple-300 hover:text-white cursor-pointer"
+												className=" p-3 border-[0.5px] text-sm font-[600] text-FA-Primary-blue-grey-900 border-FA-Primary-blue-grey-800  hover:bg-FA-Primary-blue-grey-600 hover:text-white cursor-pointer"
 											>
-												{obj.name}-{obj.symbol}
+												{obj.name} - Symbol: {obj.symbol}
 											</li>
 										</Link>
 									);

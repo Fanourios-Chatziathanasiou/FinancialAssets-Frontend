@@ -5,12 +5,14 @@ const HeaderNav: React.FC<{}> = () => {
 	const [isMenu, setMenu] = useState<boolean>(false);
 
 	return (
-		<nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded-lg dark:bg-gray-900 ">
+		<nav className="bg-[rgb(248,248,248)] border-gray-200 px-2 sm:px-4 py-2.5 rounded-lg dark:bg-gray-900  m-auto">
 			<div className="container flex flex-wrap justify-between items-center mx-auto">
 				<Link href="/">
 					<a className="flex items-center">
 						<img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
-						<span className="self-center text-xl  font-[400] whitespace-nowrap dark:text-white">FA Analyst</span>
+						<span className="self-center text-xl  font-[600] text-FA-Primary-blue-grey-900 whitespace-nowrap dark:text-white">
+							FA Analyst
+						</span>
 					</a>
 				</Link>
 
@@ -40,7 +42,7 @@ const HeaderNav: React.FC<{}> = () => {
 					</svg>
 				</button>
 				<div className={(isMenu ? "" : "hidden") + " w-full md:block md:w-auto"} id="navbar-default">
-					<ul className="flex flex-col p-4 mt-4 bg-FA-neutral-yellow-grey-100 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 mobile:bg-FA-Primary-purple-050">
+					<ul className="flex flex-col p-4 mt-4 bg-FA-neutral-yellow-grey-100 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-[rgb(248,248,248)] dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 mobile:bg-FA-Primary-blue-grey-100">
 						<li className="">
 							<Link href="/">
 								<a

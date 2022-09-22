@@ -84,10 +84,13 @@ module.exports = {
 				poppins: ["Poppins", "sans-serif"],
 			},
 			gridTemplateColumns: {
-				"auto-fit": "repeat(auto-fill, minmax(280px, 1fr))",
+				"auto-fit": "repeat(auto-fill, minmax(250px, 1fr))",
 			},
 			backgroundImage: {
 				"split-white-black": "linear-gradient(to bottom, #C6F7E9 60% , white 40%)",
+			},
+			boxShadow: {
+				customwhite: "rgba(0, 0, 0, 0.6) 0px 3px 5px 2px, rgba(0, 0, 0, 0.35) 0px 3px 5px 1px",
 			},
 		},
 	},
