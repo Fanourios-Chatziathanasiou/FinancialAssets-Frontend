@@ -1,20 +1,22 @@
 import { configureStore } from '@reduxjs/toolkit'
-import {datasetSlice} from '../features/datasetSlice'
-import {searchInputSlice} from '../features/searchInputSlice'
+import { datasetSlice } from '../features/datasetSlice'
+import { isFocusedSlice } from '../features/isFocusedSlice'
+import { searchInputSlice } from '../features/searchInputSlice'
 import { assetDataApi } from '../services/assetDataApi'
 import { searchAssetsApi } from '../services/searchAssetsApi'
 
 
 export const store = configureStore({
-  reducer: {
-     searchInput: searchInputSlice.reducer,
-     dataset: datasetSlice.reducer,
-     [searchAssetsApi.reducerPath]: searchAssetsApi.reducer,
-     [assetDataApi.reducerPath]: assetDataApi.reducer
+   reducer: {
+      searchInput: searchInputSlice.reducer,
+      dataset: datasetSlice.reducer,
+      isFocused: isFocusedSlice.reducer,
+      [searchAssetsApi.reducerPath]: searchAssetsApi.reducer,
+      [assetDataApi.reducerPath]: assetDataApi.reducer
 
-  },
+   },
    middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(searchAssetsApi.middleware).concat(assetDataApi.middleware),
+      getDefaultMiddleware().concat(searchAssetsApi.middleware).concat(assetDataApi.middleware),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

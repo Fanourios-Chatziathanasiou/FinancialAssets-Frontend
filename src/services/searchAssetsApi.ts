@@ -6,13 +6,17 @@ import { searchAssetsType } from '../types/typesCollection'
 
 export const searchAssetsApi = createApi({
   reducerPath: 'searchAssetsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.NEXT_PUBLIC_SEARCHASSETS_API_ENDPOINT}` }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${process.env.NEXT_PUBLIC_SEARCHASSETS_API_ENDPOINT}`
+
+  }),
   endpoints: (builder) => ({
-    
+
     getSearchAssetsByName: builder.query<searchAssetsType[], string>({
-      query: (name)=>`${name}`
+      query: (name) => `${name}`,
+
     }),
-    
+
   }),
 })
 

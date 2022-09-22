@@ -26,11 +26,12 @@ import {
 	withDeviceRatio,
 	withSize,
 } from "react-financial-charts";
+import { candlestickValueType } from "../../types/typesCollection";
 import { IOHLCData } from "./iOHLCData";
 import { withOHLCData } from "./withOHLCData";
 
 interface StockChartProps {
-	readonly data: IOHLCData[];
+	readonly data: candlestickValueType[];
 	readonly height: number;
 	readonly dateTimeFormat?: string;
 	readonly width: number;
@@ -60,25 +61,27 @@ const zoomButtonStyles = {
 const crossHairStyles = {
 	strokeStyle: "#9EAAC7",
 };
-const parseDate = timeParse("%Y-%m-%d");
+// const parseDate = timeParse("%Y-%m-%d");
 
-const parseData = () => (d) => {
-	const date = parseDate(d.date);
-	date ? (d.datetime = new Date(date)) : (d.datetime = new Date(Number(d.datetime)));
+// const parseData = () => (d: candlestickValueType) => {
+// 	const date = parseDate(d.datetime);
+// 	date ? (d.datetime = new Date(date)) : (d.datetime = new Date(Number(d.datetime)));
 
-	for (const key in d) {
-		if (key !== "date" && Object.prototype.hasOwnProperty.call(d, key)) {
-			d[key] = +d[key];
-		}
-	}
+// 	for (const key in d) {
+// 		if (key !== "datetime" && Object.prototype.hasOwnProperty.call(d, key)) {
+// 			d[key] = +d[key];
+// 		}
+// 	}
 
-	return d;
-};
+// 	return d;
+// };
 
 class StockChart extends React.Component<StockChartProps> {
 	private readonly margin = { left: 0, right: 58, top: 20, bottom: 24 };
 	private readonly pricesDisplayFormat = format(".3f");
-	private readonly xScaleProvider = discontinuousTimeScaleProviderBuilder().inputDateAccessor((d: IOHLCData) => d.datetime);
+	private readonly xScaleProvider = discontinuousTimeScaleProviderBuilder().inputDateAccessor(
+		(d: candlestickValueType) => d.datetime
+	);
 
 	public render() {
 		const { data: initialData, dateTimeFormat = "%Y-%m-%d", height, ratio, width } = this.props;
@@ -115,9 +118,9 @@ class StockChart extends React.Component<StockChartProps> {
 
 		const elderRayHeight = 100;
 		const elderRayOrigin = (_: number, h: number) => [0, h - elderRayHeight];
-		const barChartHeight = gridHeight / 4;
-		const barChartOrigin = (_: number, h: number) => [0, h - barChartHeight];
-		const chartHeight = gridHeight;
+		const barChartHeight = gridHeight / 9;
+		const barChartOrigin = (_: number, h: number) => [0, h - barChartHeight - elderRayHeight - 20];
+		const chartHeight = gridHeight - elderRayHeight - 20;
 
 		const timeDisplayFormat = timeFormat(dateTimeFormat);
 
@@ -135,15 +138,12 @@ class StockChart extends React.Component<StockChartProps> {
 				xExtents={xExtents}
 				zoomAnchor={lastVisibleItemBasedZoomAnchor}
 			>
+				{/* @ts-ignore */}
 				<Chart id={2} height={barChartHeight} origin={barChartOrigin} yExtents={this.barChartExtents}>
 					<BarSeries fillStyle={this.volumeColor} yAccessor={this.volumeSeries} />
 				</Chart>
-				<Chart
-					id={3}
-					height={chartHeight}
-					yExtents={this.candleChartExtents}
-					padding={{ top: 20, bottom: 70, left: 0, right: 0 }}
-				>
+				{/* @ts-ignore */}
+				<Chart id={3} height={chartHeight} yExtents={this.candleChartExtents} padding={{ top: 20, bottom: 70 }}>
 					<XAxis {...axisStyles} showGridLines showTicks={true} showTickLabel={true} />
 					<YAxis {...axisStyles} showGridLines tickFormat={this.pricesDisplayFormat} />
 					<CandlestickSeries />
@@ -182,46 +182,68 @@ class StockChart extends React.Component<StockChartProps> {
 
 					<OHLCTooltip labelFill={coordinateStyles.fill} fontSize={15} textFill={this.textFill} origin={[8, 16]} />
 				</Chart>
+				{/* @ts-ignore */}
+				<Chart
+					id={4}
+					height={elderRayHeight}
+					yExtents={[0, elder.accessor()]}
+					origin={elderRayOrigin}
+					padding={{ top: 8, bottom: 8 }}
+				>
+					<XAxis showGridLines gridLinesStrokeStyle="#e0e3eb" />
+					<YAxis ticks={4} tickFormat={this.pricesDisplayFormat} />
 
+					{/* <MouseCoordinateX displayFormat={timeDisplayFormat} /> */}
+					<MouseCoordinateY rectWidth={margin.right} displayFormat={this.pricesDisplayFormat} />
+
+					<ElderRaySeries yAccessor={elder.accessor()} />
+
+					<SingleValueTooltip
+						yAccessor={elder.accessor()}
+						yLabel="Elder Ray"
+						yDisplayFormat={(d: any) => `${this.pricesDisplayFormat(d.bullPower)}, ${this.pricesDisplayFormat(d.bearPower)}`}
+						origin={[8, 16]}
+					/>
+				</Chart>
 				<CrossHairCursor />
 			</ChartCanvas>
 		);
 	}
 
-	private readonly barChartExtents = (data: IOHLCData) => {
-		return data.volume;
+	private readonly barChartExtents = (data: candlestickValueType) => {
+		return Number(data.volume);
 	};
 
-	private readonly candleChartExtents = (data: IOHLCData) => {
-		return [data.high, data.low];
+	private readonly candleChartExtents = (data: candlestickValueType) => {
+		return [Number(data.high), Number(data.low)];
 	};
 
-	private readonly yEdgeIndicator = (data: IOHLCData) => {
-		return data.close;
+	private readonly yEdgeIndicator = (data: candlestickValueType) => {
+		return Number(data.close);
 	};
 
-	private readonly volumeColor = (data: IOHLCData) => {
-		return data.close > data.open ? "rgba(38, 166, 154, 0.3)" : "rgba(239, 83, 80, 0.3)";
+	private readonly volumeColor = (data: candlestickValueType) => {
+		return Number(data.close) > Number(data.open) ? "rgba(38, 166, 154, 0.3)" : "rgba(239, 83, 80, 0.3)";
 	};
 
-	private readonly volumeSeries = (data: IOHLCData) => {
-		return data.volume;
+	private readonly volumeSeries = (data: candlestickValueType) => {
+		return Number(data.volume);
 	};
 
-	private readonly openCloseColor = (data: IOHLCData) => {
-		return data.close > data.open ? "#26a69a" : "#ef5350";
+	private readonly openCloseColor = (data: candlestickValueType) => {
+		return Number(data.close) > Number(data.open) ? "#26a69a" : "#ef5350";
 	};
-	private readonly textFill = (data: IOHLCData) => {
-		return data.close > data.open ? "#26a69a" : "#ef5350";
+	private readonly textFill = (data: candlestickValueType) => {
+		return Number(data.close) > Number(data.open) ? "#26a69a" : "#ef5350";
 	};
 }
 
 export default withSize({ style: { minHeight: "90vmin" } })(withDeviceRatio()(StockChart));
 
-export const MinutesStockChart = withOHLCData("MINUTES")(
-	withSize({ style: { minHeight: 600 } })(withDeviceRatio()(StockChart))
-);
+// export const MinutesStockChart = withOHLCData("MINUTES")(
+// 	withSize({ style: { minHeight: 600 } })(withDeviceRatio()(StockChart))
+// );
 
-export const SecondsStockChart = withOHLCData("SECONDS")(
-	withSize({ style: { minHeight: 600 } })(withDeviceRatio()(StockChart))
-);
+// export const SecondsStockChart = withOHLCData("SECONDS")(
+// 	withSize({ style: { minHeight: 600 } })(withDeviceRatio()(StockChart))
+// );

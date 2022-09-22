@@ -1,4 +1,3 @@
-import { PriceChart } from "../src/components/chart/PriceChart";
 import HeaderNav from "../src/components/navbar/HeaderNav";
 
 export default function Layout({ children }: any) {

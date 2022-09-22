@@ -1,12 +1,10 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useGetAssetDataByNameQuery } from "../../../src/services/assetDataApi";
-import { timeParse } from "d3-time-format";
-import { PriceChart } from "../../../src/components/chart/PriceChart";
 import { useAppDispatch, useAppSelector } from "../../../src/app/hooks";
 import { updateDataset } from "../../../src/features/datasetSlice";
-import { Daily } from "../../../src/components/chart/PriceChart2";
 import StockChart from "../../../src/components/chart/StockChart";
+import { candlestickValueType } from "../../../src/types/typesCollection";
 
 const ChartResult = () => {
 	const router = useRouter();
@@ -25,11 +23,18 @@ const ChartResult = () => {
 			dispatch(updateDataset(dataCopy));
 		}
 	}, [isSuccess]);
-	let newData = dataset.values?.map((item) => Object.assign({}, item, { selected: false }));
-	const parseDate = timeParse("%Y-%m-%d");
+	let newData: candlestickValueType[] = [];
+	if (dataset.values) {
+		newData = dataset.values.map((item) => Object.assign({}, item, { selected: false }));
+	}
+
 	return (
-		<div style={{ height: "100%", width: "100%", paddingTop: "2rem" }}>
-			{dataset.values && isSuccess === true ? <StockChart data={newData} /> : ""}
+		<div className="w-[100%] mt-2">
+			<button className="text-white border-FA-Primary-purple-050 border-2 p-2 rounded-lg">Indicators</button>
+
+			<div style={{ height: "100%", width: "100%", paddingTop: "2rem" }}>
+				{dataset.values && isSuccess === true ? <StockChart data={newData} /> : ""}
+			</div>
 		</div>
 	);
 };

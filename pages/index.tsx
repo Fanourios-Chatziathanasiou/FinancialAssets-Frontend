@@ -1,12 +1,24 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { PriceChart } from "../src/components/chart/PriceChart";
+import { useAppDispatch, useAppSelector } from "../src/app/hooks";
 import Searchbar from "../src/components/searchBar/SearchBar";
-import SearchResultsCard from "../src/components/searchResults/SearchResultsCard";
+import { updateIsFocused } from "../src/features/isFocusedSlice";
 
 const Home: NextPage = () => {
+	const dispatch = useAppDispatch();
+	const isFocused = useAppSelector((state) => state.isFocused);
+
 	return (
-		<div className="w-[100%] h-[100vh] flex flex-col justify-center items-center m-auto">
+		<div
+			className="w-[100%] h-[100vh] flex flex-col justify-center items-center m-auto"
+			onClick={() => {
+				if (isFocused.value === true) {
+					if (!(document.activeElement?.tagName.toLowerCase() === "input")) {
+						dispatch(updateIsFocused(false));
+					}
+				}
+			}}
+		>
 			<Head>
 				<title>Financial Assets Analyst</title>
 				<meta name="description" content="Financial Assets Tracker for the US" />

@@ -23,7 +23,7 @@ export type candlestickValueType =
 
 
 export type assetDataType = {
-    "meta": {
+    "meta"?: {
         "id": string,
         "symbol": string,
         "interval": string,
@@ -34,7 +34,7 @@ export type assetDataType = {
         "exchange_timezone": string,
         "type": string
     }
-    "values": [{
+    "values"?: [{
         "id": string
         "datetime": string | any
         "open": string
@@ -43,5 +43,5 @@ export type assetDataType = {
         "close": string
         "volume": string
     }]
-} | {}
+}
 
