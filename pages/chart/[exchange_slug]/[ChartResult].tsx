@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../../src/app/hooks";
 import { updateDataset } from "../../../src/features/datasetSlice";
 import StockChart from "../../../src/components/chart/StockChart";
 import { candlestickValueType } from "../../../src/types/typesCollection";
+import EmaIndicator from "../../../src/components/chart/technical Indicators/EmaIndicator";
 
 const ChartResult = () => {
 	const router = useRouter();
@@ -31,7 +32,9 @@ const ChartResult = () => {
 	return (
 		<div className="w-[100%] mt-2">
 			<button className="text-white border-FA-Primary-purple-050 border-2 p-2 rounded-lg">Indicators</button>
-
+			{/* <div style={{ height: "100%", width: "100%", paddingTop: "2rem" }}>
+				{dataset.values && isSuccess === true ? <EmaIndicator data={newData} /> : ""}
+			</div> */}
 			<div style={{ height: "100%", width: "100%", paddingTop: "2rem" }}>
 				{dataset.values && isSuccess === true ? <StockChart data={newData} /> : ""}
 			</div>

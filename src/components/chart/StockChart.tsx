@@ -28,6 +28,7 @@ import {
 } from "react-financial-charts";
 import { candlestickValueType } from "../../types/typesCollection";
 import { IOHLCData } from "./iOHLCData";
+import EmaIndicator from "./technical Indicators/EmaIndicator";
 import { withOHLCData } from "./withOHLCData";
 
 interface StockChartProps {
@@ -61,20 +62,6 @@ const zoomButtonStyles = {
 const crossHairStyles = {
 	strokeStyle: "#9EAAC7",
 };
-// const parseDate = timeParse("%Y-%m-%d");
-
-// const parseData = () => (d: candlestickValueType) => {
-// 	const date = parseDate(d.datetime);
-// 	date ? (d.datetime = new Date(date)) : (d.datetime = new Date(Number(d.datetime)));
-
-// 	for (const key in d) {
-// 		if (key !== "datetime" && Object.prototype.hasOwnProperty.call(d, key)) {
-// 			d[key] = +d[key];
-// 		}
-// 	}
-
-// 	return d;
-// };
 
 class StockChart extends React.Component<StockChartProps> {
 	private readonly margin = { left: 0, right: 58, top: 20, bottom: 24 };
@@ -104,7 +91,7 @@ class StockChart extends React.Component<StockChartProps> {
 
 		const elder = elderRay();
 
-		const calculatedData = elder(ema26(ema12(initialData)));
+		const calculatedData = elder(initialData);
 
 		const { margin, xScaleProvider } = this;
 
@@ -148,6 +135,7 @@ class StockChart extends React.Component<StockChartProps> {
 					<YAxis {...axisStyles} showGridLines tickFormat={this.pricesDisplayFormat} />
 					<CandlestickSeries />
 					<LineSeries yAccessor={ema26.accessor()} strokeStyle={ema26.stroke()} />
+					<EmaIndicator data={data} />
 					<CurrentCoordinate yAccessor={ema26.accessor()} fillStyle={ema26.stroke()} />
 					<LineSeries yAccessor={ema12.accessor()} strokeStyle={ema12.stroke()} />
 					<CurrentCoordinate yAccessor={ema12.accessor()} fillStyle={ema12.stroke()} />
@@ -205,6 +193,7 @@ class StockChart extends React.Component<StockChartProps> {
 						origin={[8, 16]}
 					/>
 				</Chart>
+
 				<CrossHairCursor />
 			</ChartCanvas>
 		);

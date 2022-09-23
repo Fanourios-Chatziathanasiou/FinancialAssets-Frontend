@@ -54,14 +54,24 @@ const SearchBar: React.FC<{}> = (props) => {
 					<div
 						className={
 							"flex flex-row w-[100%] bg-[rgb(248,248,248)]  rounded-lg  " +
-							(isFocused.value == true && data?.length > 0 && inputRef.current?.value.length > 0 ? "rounded-br-none " : "")
+							(isFocused.value == true &&
+							data &&
+							data?.length > 0 &&
+							inputRef.current?.value &&
+							inputRef.current?.value.length > 0
+								? "rounded-br-none "
+								: "")
 						}
 					>
 						<input
 							ref={inputRef}
 							className={
 								" w-[92%] p-l-2  text-[2.6rem]  font-[300] rounded-l-lg border-none bg-[rgb(248,248,248)] " +
-								(isFocused.value == true && data?.length > 0 && inputRef.current?.value.length > 0
+								(isFocused.value == true &&
+								data &&
+								data?.length > 0 &&
+								inputRef.current?.value &&
+								inputRef.current?.value.length > 0
 									? "rounded-b-none rounded-r-none "
 									: "")
 							}
@@ -79,7 +89,11 @@ const SearchBar: React.FC<{}> = (props) => {
 							type="button"
 							className={
 								"rounded-r-lg m-auto w-[5%]  border-none " +
-								(isFocused.value == true && data?.length > 0 && inputRef.current?.value.length > 0
+								(isFocused.value == true &&
+								data &&
+								data?.length > 0 &&
+								inputRef.current?.value &&
+								inputRef.current?.value.length > 0
 									? "rounded-b-none rounded-r-none "
 									: "")
 							}
