@@ -1,3 +1,4 @@
+import Head from "next/head";
 import HeaderNav from "../src/components/navbar/HeaderNav";
 
 export default function Layout({ children }: any) {

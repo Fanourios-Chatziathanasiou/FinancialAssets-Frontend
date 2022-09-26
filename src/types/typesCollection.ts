@@ -45,3 +45,19 @@ export type assetDataType = {
     }]
 }
 
+export type chartParametersType = {
+    data: candlestickValueType[],
+    xScale: any,
+    xAccessor: (data: any) => number,
+    displayXAccessor: (data: any) => number;
+}
+
+export type EmaIndicatorTypes = {
+    data: candlestickValueType[];
+    period: number;
+    lineWidth: number;
+    color: string;
+    positionMultiplier: number;
+    chartParameters: chartParametersType;
+    id: number;
+}

@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useAppDispatch, useAppSelector } from "../src/app/hooks";
+import IndicatorsModal from "../src/components/indicatorsModal/IndicatorsModal";
 import Searchbar from "../src/components/searchBar/SearchBar";
 import { updateIsFocused } from "../src/features/isFocusedSlice";
 

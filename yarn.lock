@@ -3856,6 +3856,11 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
+"react-uuid@^1.0.3":
+  "integrity" "sha512-cw6Rr6JphvsdK4xHPGBjKD7XSH6Y6i4NJFWUO3OiDd7NLcR8xVeQ3CfeKm7h+S5tpZZVfbH3Tkrz/ydsIiV8pA=="
+  "resolved" "https://registry.npmjs.org/react-uuid/-/react-uuid-1.0.3.tgz"
+  "version" "1.0.3"
+
 "react-virtualized-auto-sizer@^1.0.4":
   "integrity" "sha512-Mxi6lwOmjwIjC1X4gABXMJcKHsOo0xWl3E3ugOgufB8GJU+MqrtY35aBuvCYv/razQ1Vbp7h1gWJjGjoNN5pmA=="
   "resolved" "https://registry.npmjs.org/react-virtualized-auto-sizer/-/react-virtualized-auto-sizer-1.0.7.tgz"

@@ -2,41 +2,74 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useGetAssetDataByNameQuery } from "../../../src/services/assetDataApi";
 import { useAppDispatch, useAppSelector } from "../../../src/app/hooks";
-import { updateDataset } from "../../../src/features/datasetSlice";
+
 import StockChart from "../../../src/components/chart/StockChart";
-import { candlestickValueType } from "../../../src/types/typesCollection";
-import EmaIndicator from "../../../src/components/chart/technical Indicators/EmaIndicator";
+import { candlestickValueType, chartParametersType } from "../../../src/types/typesCollection";
+import { discontinuousTimeScaleProviderBuilder } from "react-financial-charts";
+import IndicatorsModal from "../../../src/components/indicatorsModal/IndicatorsModal";
+import { IOHLCData } from "../../../src/components/chart/iOHLCData";
 
 const ChartResult = () => {
+	//chartparameters hold the shared element between chart and indicators.That way we avoid initializing them every time.
+	//It comes handy when we have to create Indicators on a different component than the one we render the chart. (For example
+	//we create indicators inside <IndicatorsModal/> but render it on the StockChart).
+	const [chartParameters, setChartParameters] = useState<chartParametersType>();
+	//The array of the *internal* indicators (Indicators placed inside the chart-excluding Volume).
+	const [internalIndicatorsArray, setInternalIndicatorsArray] = useState<JSX.Element[]>([]);
+	//Nextjs route parameter
 	const router = useRouter();
+	//Nextjs route parameter
 	const { ChartResult } = router.query;
+	//Redux-Toolkit dispatch
 	const dispatch = useAppDispatch();
-	const dataset = useAppSelector((state) => state.dataset);
+	//React Query fetch to get the data from our endpoint.
 	const { data, isSuccess } = useGetAssetDataByNameQuery(ChartResult as string, { skip: ChartResult === undefined });
+
+	//When the data is ready
 	useEffect(() => {
 		if (isSuccess === true) {
+			//convert the datetime from string to Date Object and change its order
 			let dataCopy = JSON.parse(JSON.stringify(data));
 			dataCopy.values.reverse();
 			dataCopy.values.forEach((element: any, index: number, arr: any) => {
 				dataCopy.values[index].datetime = new Date(element.datetime);
 			});
 
-			dispatch(updateDataset(dataCopy));
+			//Create the chart parameters needed to render the chart and its indicators
+			//These values will be shared across all indicators
+			const xScaleProvider = discontinuousTimeScaleProviderBuilder().inputDateAccessor(
+				(d: candlestickValueType) => d.datetime
+			);
+			//create and set the chartParameters
+			const chartParametersTempObject = {
+				xScaleProvider: discontinuousTimeScaleProviderBuilder().inputDateAccessor((d: IOHLCData) => d.datetime),
+				data: xScaleProvider(dataCopy.values).data,
+				xScale: xScaleProvider(dataCopy.values).xScale,
+				xAccessor: xScaleProvider(dataCopy.values).xAccessor,
+				displayXAccessor: xScaleProvider(dataCopy.values).displayXAccessor,
+			};
+			setChartParameters({ ...chartParametersTempObject });
 		}
 	}, [isSuccess]);
-	let newData: candlestickValueType[] = [];
-	if (dataset.values) {
-		newData = dataset.values.map((item) => Object.assign({}, item, { selected: false }));
+
+	function setInternalIndicatorsArrayFunc(el: any) {
+		setInternalIndicatorsArray(el);
 	}
 
 	return (
 		<div className="w-[100%] mt-2">
-			<button className="text-white border-FA-Primary-purple-050 border-2 p-2 rounded-lg">Indicators</button>
-			{/* <div style={{ height: "100%", width: "100%", paddingTop: "2rem" }}>
-				{dataset.values && isSuccess === true ? <EmaIndicator data={newData} /> : ""}
-			</div> */}
+			<IndicatorsModal
+				internalIndicatorsArray={internalIndicatorsArray}
+				chartParameters={chartParameters}
+				setInternalIndicatorsArray={setInternalIndicatorsArrayFunc}
+			/>
+
 			<div style={{ height: "100%", width: "100%", paddingTop: "2rem" }}>
-				{dataset.values && isSuccess === true ? <StockChart data={newData} /> : ""}
+				{chartParameters && chartParameters.data && isSuccess === true ? (
+					<StockChart internalIndicatorsArray={internalIndicatorsArray} chartParameters={chartParameters} />
+				) : (
+					""
+				)}
 			</div>
 		</div>
 	);
