@@ -36,7 +36,10 @@ class EmaIndicator extends React.Component<EmaIndicatorTypes> {
 		return (
 			<React.Fragment key={this.props.id}>
 				<LineSeries yAccessor={emaCalculator.accessor()} strokeWidth={lineWidth} strokeStyle={color} />
+
 				<MovingAverageTooltip
+					labelFill="#FFFFFF"
+					onClick={() => console.log("clicked")}
 					origin={[8 + 65 * this.props.positionMultiplier, 24]}
 					textFill={"#FFFFFF"}
 					options={[

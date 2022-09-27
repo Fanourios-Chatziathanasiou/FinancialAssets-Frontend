@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { datasetSlice } from '../features/datasetSlice'
 import { isFocusedSlice } from '../features/isFocusedSlice'
+import { isIndicatorsModalShowingSlice } from '../features/isIndicatorsModalShowingSlice'
 import { searchInputSlice } from '../features/searchInputSlice'
 import { assetDataApi } from '../services/assetDataApi'
 import { searchAssetsApi } from '../services/searchAssetsApi'
@@ -11,6 +12,7 @@ export const store = configureStore({
       searchInput: searchInputSlice.reducer,
       dataset: datasetSlice.reducer,
       isFocused: isFocusedSlice.reducer,
+      isIndicatorsModalShowing: isIndicatorsModalShowingSlice.reducer,
       [searchAssetsApi.reducerPath]: searchAssetsApi.reducer,
       [assetDataApi.reducerPath]: assetDataApi.reducer
 

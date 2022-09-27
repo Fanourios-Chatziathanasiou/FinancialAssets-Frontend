@@ -8,8 +8,14 @@ import { candlestickValueType, chartParametersType } from "../../../src/types/ty
 import { discontinuousTimeScaleProviderBuilder } from "react-financial-charts";
 import IndicatorsModal from "../../../src/components/indicatorsModal/IndicatorsModal";
 import { IOHLCData } from "../../../src/components/chart/iOHLCData";
+import IndicatorsEditorModal from "../../../src/components/indicatorsEditorModal/IndicatorsEditorModal";
 
 const ChartResult = () => {
+	//IndicatorsEditorModal state to manipulate wheter it is showing or not.
+	const [isIndicatorsEditorModalShowing, setIsIndicatorsEditorModalShowing] = useState<boolean>(false);
+	const setIsIndicatorsEditorModalShowingFunc = (boolean: boolean) => {
+		setIsIndicatorsEditorModalShowing(boolean);
+	};
 	//chartparameters hold the shared element between chart and indicators.That way we avoid initializing them every time.
 	//It comes handy when we have to create Indicators on a different component than the one we render the chart. (For example
 	//we create indicators inside <IndicatorsModal/> but render it on the StockChart).
@@ -59,6 +65,13 @@ const ChartResult = () => {
 	return (
 		<div className="w-[100%] mt-2">
 			<IndicatorsModal
+				internalIndicatorsArray={internalIndicatorsArray}
+				chartParameters={chartParameters}
+				setInternalIndicatorsArray={setInternalIndicatorsArrayFunc}
+			/>
+			<IndicatorsEditorModal
+				isIndicatorsEditorModalShowing={isIndicatorsEditorModalShowing}
+				setIsIndicatorsEditorModalShowing={setIsIndicatorsEditorModalShowingFunc}
 				internalIndicatorsArray={internalIndicatorsArray}
 				chartParameters={chartParameters}
 				setInternalIndicatorsArray={setInternalIndicatorsArrayFunc}
