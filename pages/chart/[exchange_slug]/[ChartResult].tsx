@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useGetAssetDataByNameQuery } from "../../../src/services/assetDataApi";
-import { useAppDispatch, useAppSelector } from "../../../src/app/hooks";
+import { useAppDispatch } from "../../../src/app/hooks";
 
 import StockChart from "../../../src/components/chart/StockChart";
 import { candlestickValueType, chartParametersType } from "../../../src/types/typesCollection";
@@ -12,10 +12,10 @@ import IndicatorsEditorModal from "../../../src/components/indicatorsEditorModal
 
 const ChartResult = () => {
 	//IndicatorsEditorModal state to manipulate wheter it is showing or not.
-	const [isIndicatorsEditorModalShowing, setIsIndicatorsEditorModalShowing] = useState<boolean>(false);
-	const setIsIndicatorsEditorModalShowingFunc = (boolean: boolean) => {
-		setIsIndicatorsEditorModalShowing(boolean);
-	};
+	// const [isIndicatorsEditorModalShowing, setIsIndicatorsEditorModalShowing] = useState<boolean>(false);
+	// const setIsIndicatorsEditorModalShowingFunc = (boolean: boolean) => {
+	// 	setIsIndicatorsEditorModalShowing(boolean);
+	// };
 	//chartparameters hold the shared element between chart and indicators.That way we avoid initializing them every time.
 	//It comes handy when we have to create Indicators on a different component than the one we render the chart. (For example
 	//we create indicators inside <IndicatorsModal/> but render it on the StockChart).
@@ -70,8 +70,6 @@ const ChartResult = () => {
 				setInternalIndicatorsArray={setInternalIndicatorsArrayFunc}
 			/>
 			<IndicatorsEditorModal
-				isIndicatorsEditorModalShowing={isIndicatorsEditorModalShowing}
-				setIsIndicatorsEditorModalShowing={setIsIndicatorsEditorModalShowingFunc}
 				internalIndicatorsArray={internalIndicatorsArray}
 				chartParameters={chartParameters}
 				setInternalIndicatorsArray={setInternalIndicatorsArrayFunc}

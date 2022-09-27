@@ -1,16 +1,28 @@
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import EmaIndicator from "../chart/technical Indicators/chart internal Indicators/EmaIndicator";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import uuid from "react-uuid";
 import IndicatorsDb from "../chart/technical Indicators/IndicatorsDb";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { updateisIndicatorsModalShowing } from "../../features/isIndicatorsModalShowingSlice";
 
 const IndicatorsEditorModal = (props: any) => {
+	//Redux-Toolkit dispatch
+	const dispatch = useAppDispatch();
+	const isIndicatorsModalShowing = useAppSelector((state) => state.isIndicatorsModalShowing);
+
+	useEffect(() => {
+		console.log(isIndicatorsModalShowing);
+	}, [isIndicatorsModalShowing]);
+
 	const onClick = () => {
-		props.setIsIndicatorsEditorModalShowing(true);
+		dispatch(updateisIndicatorsModalShowing(true));
+		// props.setIsIndicatorsEditorModalShowing(true);
 	};
 
 	const onClose = () => {
-		props.setIsIndicatorsEditorModalShowing(false);
+		dispatch(updateisIndicatorsModalShowing(false));
+		// props.setIsIndicatorsEditorModalShowing(false);
 	};
 	function enforceMinMax(el: any) {
 		if (el.value != "") {
@@ -39,7 +51,8 @@ const IndicatorsEditorModal = (props: any) => {
 		} else {
 			console.log("This Combination does not exist in the database");
 		}
-		props.setIsIndicatorsEditorModalShowing(false);
+		dispatch(updateisIndicatorsModalShowing(false));
+		// props.setIsIndicatorsEditorModalShowing(false);
 	};
 
 	const handleChange = (e: any) => {
@@ -66,12 +79,12 @@ const IndicatorsEditorModal = (props: any) => {
 			>
 				Indicators Editor
 			</Button>
-			<Modal show={props.isIndicatorsEditorModalShowing} size="4xl" popup={true} onClose={onClose}>
+			<Modal show={isIndicatorsModalShowing.value} size="4xl" popup={true} onClose={onClose}>
 				<Modal.Header />
 				<Modal.Body>
 					<div className="relative p-4 w-full  h-full md:h-auto m-auto ">
 						<div className="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
-							<h3 className="text-lg font-semibold text-gray-900 dark:text-white">Technical Indicators</h3>
+							<h3 className="text-lg font-semibold text-gray-900 dark:text-white">Indicators Editor</h3>
 						</div>
 
 						<div className="p-6 ">

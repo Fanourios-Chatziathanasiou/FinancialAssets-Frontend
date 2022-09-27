@@ -1,3 +1,4 @@
+
 export type searchAssetsType = {
     "name": string,
     "symbol": string,
@@ -53,11 +54,12 @@ export type chartParametersType = {
 }
 
 export type EmaIndicatorTypes = {
-    data: candlestickValueType[];
-    period: number;
-    lineWidth: number;
-    color: string;
-    positionMultiplier: number;
-    chartParameters: chartParametersType;
-    id: number;
+    data: candlestickValueType[],
+    period: number,
+    lineWidth: number,
+    color: string,
+    positionMultiplier: number,
+    chartParameters: chartParametersType,
+    id: number,
+   
 }

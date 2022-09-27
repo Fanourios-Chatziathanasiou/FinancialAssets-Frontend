@@ -27,6 +27,7 @@ export const isIndicatorsModalShowingSlice = createSlice({
 
 export const { updateisIndicatorsModalShowing } = isIndicatorsModalShowingSlice.actions
 
+
 // Other code such as selectors can use the imported `RootState` type
 export const selectIsIndicatorsModalShowing = (state: RootState) => state.isIndicatorsModalShowing.value
 

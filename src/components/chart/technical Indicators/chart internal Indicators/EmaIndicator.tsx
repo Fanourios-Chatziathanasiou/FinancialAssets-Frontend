@@ -9,6 +9,9 @@ import { MovingAverageTooltip } from "react-financial-charts";
 import { IOHLCData } from "../../iOHLCData";
 import { withDeviceRatio, withSize } from "react-financial-charts";
 import { candlestickValueType, chartParametersType, EmaIndicatorTypes } from "../../../../types/typesCollection";
+import { updateisIndicatorsModalShowing } from "../../../../features/isIndicatorsModalShowingSlice";
+import { connect } from "react-redux";
+import { RootState, store } from "../../../../app/store";
 
 class EmaIndicator extends React.Component<EmaIndicatorTypes> {
 	private readonly margin = { left: 0, right: 58, top: 8, bottom: 24 };
@@ -39,7 +42,9 @@ class EmaIndicator extends React.Component<EmaIndicatorTypes> {
 
 				<MovingAverageTooltip
 					labelFill="#FFFFFF"
-					onClick={() => console.log("clicked")}
+					onClick={() => {
+						store.dispatch(updateisIndicatorsModalShowing(true));
+					}}
 					origin={[8 + 65 * this.props.positionMultiplier, 24]}
 					textFill={"#FFFFFF"}
 					options={[
@@ -56,5 +61,8 @@ class EmaIndicator extends React.Component<EmaIndicatorTypes> {
 		);
 	}
 }
+const mapStateToProps = (state: RootState) => ({
+	count: state.isIndicatorsModalShowing.value,
+});
 
-export default EmaIndicator;
+export default connect(mapStateToProps)(EmaIndicator);
