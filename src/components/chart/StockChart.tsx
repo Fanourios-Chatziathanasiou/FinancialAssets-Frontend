@@ -18,7 +18,9 @@ import {
 	withDeviceRatio,
 	withSize,
 } from "react-financial-charts";
+import uuid from "react-uuid";
 import { candlestickValueType } from "../../types/typesCollection";
+import IndicatorsDb from "../chart/technical Indicators/IndicatorsDb";
 
 interface StockChartProps {
 	// data: candlestickValueType[];
@@ -27,7 +29,7 @@ interface StockChartProps {
 	width: number;
 	ratio: number;
 	chartParameters: any;
-	internalIndicatorsArray: JSX.Element[];
+	indicatorsArray: any;
 }
 
 const axisStyles = {
@@ -65,8 +67,7 @@ class StockChart extends React.Component<StockChartProps> {
 	// }
 
 	public render() {
-
-		//React-Financial-Charts defaults 
+		//React-Financial-Charts defaults
 		const { height, ratio, width } = this.props;
 		const dateTimeFormat = "%Y-%m-%d";
 		const { margin } = this;
@@ -102,7 +103,13 @@ class StockChart extends React.Component<StockChartProps> {
 				<Chart id={3} height={chartHeight} yExtents={this.candleChartExtents} padding={{ top: 20, bottom: 70 }}>
 					<XAxis {...axisStyles} showGridLines showTicks={true} showTickLabel={true} />
 					<YAxis {...axisStyles} showGridLines tickFormat={this.pricesDisplayFormat} />
-
+					{this.props.indicatorsArray.map((ChartInternalIndicator: any, index: number) => {
+						return ChartInternalIndicator.indicatorType === "internalIndicator" ? (
+							<React.Fragment key={uuid()}>
+								{IndicatorsDb({ ...ChartInternalIndicator, positionMultiplier: index })}
+							</React.Fragment>
+						) : null;
+					})}
 					<CandlestickSeries />
 
 					<MouseCoordinateY rectWidth={margin.right} displayFormat={this.pricesDisplayFormat} {...coordinateStyles} />
@@ -117,8 +124,6 @@ class StockChart extends React.Component<StockChartProps> {
 					/>
 
 					<OHLCTooltip labelFill={"#FFFFFF"} fontSize={15} textFill={this.textFill} origin={[8, 16]} />
-
-					{this.props.internalIndicatorsArray.map((ChartInternalIndicator, index: number) => ChartInternalIndicator)}
 				</Chart>
 				<CrossHairCursor />
 			</ChartCanvas>

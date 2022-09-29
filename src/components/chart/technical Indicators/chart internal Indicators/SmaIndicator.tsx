@@ -1,27 +1,26 @@
 import * as React from "react";
-import { CurrentCoordinate } from "react-financial-charts";
-import { ema } from "react-financial-charts";
+import { CurrentCoordinate, sma } from "react-financial-charts";
 import { LineSeries } from "react-financial-charts";
 import { MovingAverageTooltip } from "react-financial-charts";
-import { EmaIndicatorTypes } from "../../../../types/typesCollection";
+import { SmaIndicatorTypes } from "../../../../types/typesCollection";
 
-class EmaIndicator extends React.Component<EmaIndicatorTypes> {
+class SmaIndicator extends React.Component<SmaIndicatorTypes> {
 	private readonly margin = { left: 0, right: 58, top: 8, bottom: 24 };
 	// private readonly xScaleProvider = discontinuousTimeScaleProviderBuilder().inputDateAccessor((d: IOHLCData) => d.datetime);
 
 	public render() {
 		const { period, lineWidth, color } = this.props;
 
-		const emaCalculator = ema()
+		const smaCalculator = sma()
 			.id(this.props.id)
 			.options({ windowSize: period })
 			.merge((d: any, c: any) => {
-				d[`EMA_${this.props.period}`] = c;
+				d[`SMA_${this.props.period}`] = c;
 			})
-			.accessor((d: any) => d[`EMA_${period}`]);
+			.accessor((d: any) => d[`SMA_${period}`]);
 
 		const { data: initialData, xScale, xAccessor } = this.props.chartParameters;
-		const calculatedData = emaCalculator(initialData);
+		const calculatedData = smaCalculator(initialData);
 
 		// const { data } = this.props.chartParameters.xScaleProvider(calculatedData);
 		// const max = xAccessor(data[data.length - 1]);
@@ -30,10 +29,10 @@ class EmaIndicator extends React.Component<EmaIndicatorTypes> {
 
 		return (
 			<React.Fragment key={this.props.id}>
-				<LineSeries yAccessor={emaCalculator.accessor()} strokeWidth={lineWidth} strokeStyle={color} />
+				<LineSeries yAccessor={smaCalculator.accessor()} strokeWidth={lineWidth} strokeStyle={color} />
 
 				<MovingAverageTooltip
-					labelFill={"#FFFFFF"}
+					labelFill="#FFFFFF"
 					// onClick={() => {
 					// 	store.dispatch(updateisIndicatorsModalShowing(true));
 					// }}
@@ -41,14 +40,14 @@ class EmaIndicator extends React.Component<EmaIndicatorTypes> {
 					textFill={"#FFFFFF"}
 					options={[
 						{
-							yAccessor: emaCalculator.accessor(),
-							type: "EMA",
+							yAccessor: smaCalculator.accessor(),
+							type: "SMA",
 							stroke: color,
-							windowSize: emaCalculator.options().windowSize,
+							windowSize: smaCalculator.options().windowSize,
 						},
 					]}
 				/>
-				<CurrentCoordinate yAccessor={emaCalculator.accessor()} r={this.props.lineWidth + 2} fillStyle={color} />
+				<CurrentCoordinate yAccessor={smaCalculator.accessor()} r={this.props.lineWidth + 2} fillStyle={color} />
 			</React.Fragment>
 		);
 	}
@@ -59,4 +58,4 @@ class EmaIndicator extends React.Component<EmaIndicatorTypes> {
 
 // export default connect(mapStateToProps)(EmaIndicator);
 
-export default EmaIndicator;
+export default SmaIndicator;

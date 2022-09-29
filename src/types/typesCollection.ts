@@ -61,5 +61,15 @@ export type EmaIndicatorTypes = {
     positionMultiplier: number,
     chartParameters: chartParametersType,
     id: number,
-   
+
+}
+export type SmaIndicatorTypes = {
+    data: candlestickValueType[],
+    period: number,
+    lineWidth: number,
+    color: string,
+    positionMultiplier: number,
+    chartParameters: chartParametersType,
+    id: number,
+
 }

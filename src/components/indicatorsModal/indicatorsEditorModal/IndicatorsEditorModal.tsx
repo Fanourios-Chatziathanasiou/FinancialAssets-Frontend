@@ -1,19 +1,15 @@
-import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
-import EmaIndicator from "../chart/technical Indicators/chart internal Indicators/EmaIndicator";
-import React, { useEffect, useState } from "react";
+import { Modal } from "flowbite-react";
+import React, { useState } from "react";
 import uuid from "react-uuid";
-import IndicatorsDb from "../chart/technical Indicators/IndicatorsDb";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { updateisIndicatorsModalShowing } from "../../features/isIndicatorsModalShowingSlice";
+import IndicatorsDb from "../../chart/technical Indicators/IndicatorsDb";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { updateisIndicatorsModalShowing } from "../../../features/isIndicatorsModalShowingSlice";
 
+//********NYI -> This component will serve as an editor for an existing indicator.**********
 const IndicatorsEditorModal = (props: any) => {
 	//Redux-Toolkit dispatch
 	const dispatch = useAppDispatch();
 	const isIndicatorsModalShowing = useAppSelector((state) => state.isIndicatorsModalShowing);
-
-	useEffect(() => {
-		console.log(isIndicatorsModalShowing);
-	}, [isIndicatorsModalShowing]);
 
 	const onClick = () => {
 		dispatch(updateisIndicatorsModalShowing(true));
@@ -42,12 +38,12 @@ const IndicatorsEditorModal = (props: any) => {
 			period: indicatorParams.period,
 			lineWidth: indicatorParams.lineWidth,
 			chartParameters: props.chartParameters,
-			positionMultiplier: props.internalIndicatorsArray.length,
+			positionMultiplier: props.indicatorsArray.length,
 			id: uuid(),
 		});
 
 		if (generatedComponent !== undefined) {
-			props.setInternalIndicatorsArray((prevState: JSX.Element[]) => prevState.concat(generatedComponent));
+			props.setindicatorsArray((prevState: JSX.Element[]) => prevState.concat(generatedComponent));
 		} else {
 			console.log("This Combination does not exist in the database");
 		}
@@ -56,11 +52,11 @@ const IndicatorsEditorModal = (props: any) => {
 	};
 
 	const handleChange = (e: any) => {
-		console.log(e);
+		// console.log(e);
 		const id = e.target.id;
 		const value = e.target.value;
 		setIndicatorParams({ ...indicatorParams, [id]: value });
-		console.log(indicatorParams);
+		// console.log(indicatorParams);
 	};
 
 	const handleChangeNumber = (e: any) => {
@@ -68,17 +64,11 @@ const IndicatorsEditorModal = (props: any) => {
 		const id = e.target.id;
 		const value = e.target.valueAsNumber;
 		setIndicatorParams({ ...indicatorParams, [id]: value });
-		console.log(indicatorParams);
+		// console.log(indicatorParams);
 	};
 
 	return (
 		<React.Fragment>
-			<Button
-				style={{ paddingBlock: "0.1rem", paddingInline: "1.2rem", border: "0.2rem solid white", background: "none" }}
-				onClick={onClick}
-			>
-				Indicators Editor
-			</Button>
 			<Modal show={isIndicatorsModalShowing.value} size="4xl" popup={true} onClose={onClose}>
 				<Modal.Header />
 				<Modal.Body>

@@ -2,26 +2,24 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useGetAssetDataByNameQuery } from "../../../src/services/assetDataApi";
 import { useAppDispatch } from "../../../src/app/hooks";
-
 import StockChart from "../../../src/components/chart/StockChart";
 import { candlestickValueType, chartParametersType } from "../../../src/types/typesCollection";
 import { discontinuousTimeScaleProviderBuilder } from "react-financial-charts";
 import IndicatorsModal from "../../../src/components/indicatorsModal/IndicatorsModal";
 import { IOHLCData } from "../../../src/components/chart/iOHLCData";
-import IndicatorsEditorModal from "../../../src/components/indicatorsEditorModal/IndicatorsEditorModal";
+import IndicatorsEditorModal from "../../../src/components/indicatorsModal/indicatorsEditorModal/IndicatorsEditorModal";
+import IndicatorsListModal from "../../../src/components/indicatorsListModal/IndicatorsListModal";
 
 const ChartResult = () => {
-	//IndicatorsEditorModal state to manipulate wheter it is showing or not.
-	// const [isIndicatorsEditorModalShowing, setIsIndicatorsEditorModalShowing] = useState<boolean>(false);
-	// const setIsIndicatorsEditorModalShowingFunc = (boolean: boolean) => {
-	// 	setIsIndicatorsEditorModalShowing(boolean);
-	// };
 	//chartparameters hold the shared element between chart and indicators.That way we avoid initializing them every time.
 	//It comes handy when we have to create Indicators on a different component than the one we render the chart. (For example
 	//we create indicators inside <IndicatorsModal/> but render it on the StockChart).
 	const [chartParameters, setChartParameters] = useState<chartParametersType>();
 	//The array of the *internal* indicators (Indicators placed inside the chart-excluding Volume).
-	const [internalIndicatorsArray, setInternalIndicatorsArray] = useState<JSX.Element[]>([]);
+	const [indicatorsArray, setindicatorsArray] = useState<JSX.Element[]>([]);
+	useEffect(() => {
+		console.log(indicatorsArray);
+	}, [indicatorsArray]);
 	//Nextjs route parameter
 	const router = useRouter();
 	//Nextjs route parameter
@@ -58,26 +56,29 @@ const ChartResult = () => {
 		}
 	}, [isSuccess]);
 
-	function setInternalIndicatorsArrayFunc(el: any) {
-		setInternalIndicatorsArray(el);
+	function setindicatorsArrayFunc(el: any) {
+		setindicatorsArray(el);
 	}
 
 	return (
 		<div className="w-[100%] mt-2">
-			<IndicatorsModal
-				internalIndicatorsArray={internalIndicatorsArray}
-				chartParameters={chartParameters}
-				setInternalIndicatorsArray={setInternalIndicatorsArrayFunc}
-			/>
-			<IndicatorsEditorModal
-				internalIndicatorsArray={internalIndicatorsArray}
-				chartParameters={chartParameters}
-				setInternalIndicatorsArray={setInternalIndicatorsArrayFunc}
-			/>
+			<div className="flex  gap-4">
+				<IndicatorsModal
+					indicatorsArray={indicatorsArray}
+					chartParameters={chartParameters}
+					setindicatorsArray={setindicatorsArrayFunc}
+				/>
 
+				<IndicatorsListModal indicatorsArray={indicatorsArray} setindicatorsArray={setindicatorsArrayFunc} />
+			</div>
+			<IndicatorsEditorModal
+				indicatorsArray={indicatorsArray}
+				chartParameters={chartParameters}
+				setindicatorsArray={setindicatorsArrayFunc}
+			/>
 			<div style={{ height: "100%", width: "100%", paddingTop: "2rem" }}>
 				{chartParameters && chartParameters.data && isSuccess === true ? (
-					<StockChart internalIndicatorsArray={internalIndicatorsArray} chartParameters={chartParameters} />
+					<StockChart indicatorsArray={indicatorsArray} chartParameters={chartParameters} />
 				) : (
 					""
 				)}
