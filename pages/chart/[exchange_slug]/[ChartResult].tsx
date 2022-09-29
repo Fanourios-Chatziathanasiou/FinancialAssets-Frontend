@@ -32,6 +32,7 @@ const ChartResult = () => {
 	//When the data is ready
 	useEffect(() => {
 		if (isSuccess === true) {
+			console.log(data);
 			//convert the datetime from string to Date Object and change its order
 			let dataCopy = JSON.parse(JSON.stringify(data));
 			dataCopy.values.reverse();
@@ -60,23 +61,37 @@ const ChartResult = () => {
 		setindicatorsArray(el);
 	}
 
-	return (
-		<div className="w-[100%] mt-2">
-			<div className="flex  gap-4">
-				<IndicatorsModal
-					indicatorsArray={indicatorsArray}
-					chartParameters={chartParameters}
-					setindicatorsArray={setindicatorsArrayFunc}
-				/>
+	return isSuccess === false ? (
+		<div role="status" className="p-2 w-full h-[80vh]">
+			<div className="w-full h-full   rounded-lg flex justify-center items-center">
+				<h1 className="animate-pulse  text-lg text-FA-Primary-yellow-vivid-300 font-[200]">
+					Loading Data for {ChartResult} . . .
+				</h1>
+			</div>
+			<span className="sr-only">Loading...</span>
+		</div>
+	) : (
+		<div className="w-[100%] mt-2 ">
+			<div className="flex justify-between">
+				<div className="flex  gap-4">
+					<IndicatorsModal
+						indicatorsArray={indicatorsArray}
+						chartParameters={chartParameters}
+						setindicatorsArray={setindicatorsArrayFunc}
+					/>
 
-				<IndicatorsListModal indicatorsArray={indicatorsArray} setindicatorsArray={setindicatorsArrayFunc} />
+					<IndicatorsListModal indicatorsArray={indicatorsArray} setindicatorsArray={setindicatorsArrayFunc} />
+				</div>
+				<h1 className="text-FA-Primary-yellow-vivid-400 text-lg mobile:text-sm">
+					{data?.meta?.symbol} {data?.meta?.symbol ? " - " : ""} {data?.meta?.exchange}
+				</h1>
 			</div>
 			<IndicatorsEditorModal
 				indicatorsArray={indicatorsArray}
 				chartParameters={chartParameters}
 				setindicatorsArray={setindicatorsArrayFunc}
 			/>
-			<div style={{ height: "100%", width: "100%", paddingTop: "2rem" }}>
+			<div style={{ height: "100%", width: "100%" }}>
 				{chartParameters && chartParameters.data && isSuccess === true ? (
 					<StockChart indicatorsArray={indicatorsArray} chartParameters={chartParameters} />
 				) : (

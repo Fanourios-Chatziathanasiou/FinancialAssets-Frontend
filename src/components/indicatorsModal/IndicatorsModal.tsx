@@ -84,6 +84,9 @@ const IndicatorsModal = (props: any) => {
 
 	return (
 		<React.Fragment>
+			{/* <button className="border-2 rounded-lg p-0 m-0 " onClick={onClick}>
+				Indicators
+			</button> */}
 			<Button
 				style={{
 					paddingBlock: "0.1rem",

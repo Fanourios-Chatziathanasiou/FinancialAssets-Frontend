@@ -15,7 +15,7 @@ const SearchResults = () => {
 		<>
 			<h1 className="text-white text-xl p-10 font-[400]">
 				Search results for{" "}
-				<span className="font-[300] italic text-xl text-FA-Primary-yellow-vivid-300">{SearchResults}</span>
+				<span className="font-[300] italic text-xl text-FA-Primary-yellow-vivid-400">{SearchResults}</span>
 			</h1>
 			<div className="max-w-[1440px] w-[100%] grid grid-cols-auto-fit justify-items-center align-center  gap-36">
 				{data?.slice(0, 20).map((searchResultElement: searchAssetsType, index: number) => {
