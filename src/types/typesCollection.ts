@@ -91,3 +91,12 @@ export type RSIIndicatorTypes = {
     lineWidth: number,
 
 }
+
+export type MACDIndicatorTypes = {
+    data: candlestickValueType[];
+    chartParameters: chartParametersType;
+    fastEMA: number;
+    signalLine: number;
+    slowEMA: number;
+    id: number | string;
+}

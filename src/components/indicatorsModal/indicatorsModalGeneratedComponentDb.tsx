@@ -40,6 +40,17 @@ const indicatorsModalGeneratedComponentDb = (props: Record<string, any>) => {
 				oversoldThreshold: props.oversoldThreshold,
 				id: uuid(),
 			};
+		case props.name.startsWith("Moving Average Convergence Divergence"):
+			return {
+				name: `${props.name} - ${props.fastEMA} - ${props.slowEMA} - ${props.signalLine} `,
+				indicatorType: props.indicatorType,
+				fastEMA: props.fastEMA,
+				slowEMA: props.slowEMA,
+				signalLine: props.signalLine,
+				chartParameters: props.chartParameters,
+				positionMultiplier: props.positionMultiplier,
+				id: uuid(),
+			};
 		default:
 			return {};
 	}

@@ -42,6 +42,7 @@ const IndicatorsModal = (props: any) => {
 		const valuesJSON = JSON.parse(e.target.value);
 		const initialValues = IndicatorsInitialValuesDb({ ...valuesJSON, positionMultiplier: positionMultiplier });
 		setIndicatorParams(initialValues);
+		console.log(initialValues);
 	};
 	const handleChangeColor = (e: any) => {
 		const colorObject = {
@@ -129,7 +130,9 @@ const IndicatorsModal = (props: any) => {
 								<option value='{"name":"Relative Strength Index", "indicatorType":"externalIndicator"}'>
 									Relative Strength Index
 								</option>
-								<option value="MACD">MACD</option>
+								<option value='{"name":"Moving Average Convergence Divergence", "indicatorType":"externalIndicator"}'>
+									MACD
+								</option>
 							</select>
 							{IndicatorsModalDb(indicatorParams, allFunctions)}
 							{/* <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">

@@ -22,15 +22,13 @@ const IndicatorsInitialValuesDb = (props: Record<string, any>) => {
 				chartParameters: props.chartParameters,
 				positionMultiplier: props.positionMultiplier,
 			};
-		case props.name.startsWith("Relative Strength Index"):
+		case props.name.startsWith("Moving Average Convergence Divergence"):
 			return {
 				name: props.name,
 				indicatorType: props.indicatorType,
-				color: "#FFFFFF",
-				period: 26,
-				lineWidth: 2,
-				overboughtThreshold: 70,
-				oversoldThreshold: 30,
+				fastEMA: 12,
+				slowEMA: 26,
+				signalLine: 9,
 				chartParameters: props.chartParameters,
 				positionMultiplier: props.positionMultiplier,
 			};

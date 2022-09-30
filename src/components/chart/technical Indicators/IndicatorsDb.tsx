@@ -1,5 +1,6 @@
 import React from "react";
 import uuid from "react-uuid";
+import MACDIndicator from "./chart external Indicators/MACDIndicator";
 import RSIIndicator from "./chart external Indicators/RSIIndicator";
 import EmaIndicator from "./chart internal Indicators/EmaIndicator";
 import SmaIndicator from "./chart internal Indicators/SmaIndicator";
@@ -48,7 +49,18 @@ const IndicatorsDb = (props: Record<string, any>) => {
 					lineWidth={props.lineWidth}
 				/>
 			);
-
+		case props.name.startsWith("Moving Average Convergence Divergence"):
+			return (
+				// @ts-ignore
+				<MACDIndicator
+					chartParameters={props.chartParameters}
+					data={props.data}
+					id={props.id}
+					fastEMA={props.fastEMA}
+					slowEMA={props.slowEMA}
+					signalLine={props.signalLine}
+				/>
+			);
 		default:
 			break;
 	}
