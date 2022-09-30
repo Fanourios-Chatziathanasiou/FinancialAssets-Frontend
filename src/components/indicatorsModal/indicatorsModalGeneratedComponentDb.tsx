@@ -27,6 +27,19 @@ const indicatorsModalGeneratedComponentDb = (props: Record<string, any>) => {
 				positionMultiplier: props.positionMultiplier,
 				id: uuid(),
 			};
+		case props.name.startsWith("Relative Strength Index"):
+			return {
+				name: `${props.name} - ${props.period}`,
+				indicatorType: props.indicatorType,
+				color: props.color,
+				period: props.period,
+				lineWidth: props.lineWidth,
+				chartParameters: props.chartParameters,
+				positionMultiplier: props.positionMultiplier,
+				overboughtThreshold: props.overboughtThreshold,
+				oversoldThreshold: props.oversoldThreshold,
+				id: uuid(),
+			};
 		default:
 			return {};
 	}

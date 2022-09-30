@@ -26,6 +26,7 @@ const IndicatorsListModal = (props: any) => {
 
 	const handleDelete = (currentIndicator: any) => {
 		const filteredArray = props.indicatorsArray.filter((indicator: any) => {
+			console.log("clicked indicator", currentIndicator);
 			return indicator.name !== currentIndicator.name;
 		});
 		props.setindicatorsArray(filteredArray);
@@ -61,25 +62,27 @@ const IndicatorsListModal = (props: any) => {
 						<Table.Body className="divide-y">
 							{props.indicatorsArray.map((indicator: any) => {
 								return (
-									<Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center leading-[220%]">
-										<Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white text-start">
-											{indicator.name}
-										</Table.Cell>
+									<React.Fragment key={uuid()}>
+										<Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 text-center leading-[220%]">
+											<Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white text-start">
+												{indicator.name}
+											</Table.Cell>
 
-										<Table.Cell>
-											<span className="font-medium text-blue-600 hover:underline dark:text-blue-500 cursor-pointer">
-												Edit
-											</span>
-										</Table.Cell>
-										<Table.Cell>
-											<span
-												onClick={() => handleDelete(indicator)}
-												className="font-medium text-blue-600 hover:underline dark:text-blue-500 cursor-pointer"
-											>
-												Delete
-											</span>
-										</Table.Cell>
-									</Table.Row>
+											<Table.Cell>
+												<span className="font-medium text-blue-600 hover:underline dark:text-blue-500 cursor-pointer">
+													Edit
+												</span>
+											</Table.Cell>
+											<Table.Cell>
+												<span
+													onClick={() => handleDelete(indicator)}
+													className="font-medium text-blue-600 hover:underline dark:text-blue-500 cursor-pointer"
+												>
+													Delete
+												</span>
+											</Table.Cell>
+										</Table.Row>
+									</React.Fragment>
 								);
 							})}
 						</Table.Body>

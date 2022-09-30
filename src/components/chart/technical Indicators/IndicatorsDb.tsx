@@ -1,4 +1,6 @@
 import React from "react";
+import uuid from "react-uuid";
+import RSIIndicator from "./chart external Indicators/RSIIndicator";
 import EmaIndicator from "./chart internal Indicators/EmaIndicator";
 import SmaIndicator from "./chart internal Indicators/SmaIndicator";
 
@@ -31,6 +33,22 @@ const IndicatorsDb = (props: Record<string, any>) => {
 					chartParameters={props.chartParameters}
 				/>
 			);
+		case props.name.startsWith("Relative Strength Index"):
+			return (
+				// @ts-ignore
+				<RSIIndicator
+					chartParameters={props.chartParameters}
+					positionMultiplier={props.positionMultiplier}
+					data={props.data}
+					color={props.color}
+					period={props.period}
+					id={props.id}
+					overboughtThreshold={props.overboughtThreshold}
+					oversoldThreshold={props.oversoldThreshold}
+					lineWidth={props.lineWidth}
+				/>
+			);
+
 		default:
 			break;
 	}

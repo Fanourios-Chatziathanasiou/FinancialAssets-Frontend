@@ -22,6 +22,8 @@ import uuid from "react-uuid";
 import { candlestickValueType } from "../../types/typesCollection";
 import IndicatorsDb from "../chart/technical Indicators/IndicatorsDb";
 
+//yExtents => what values does this chart get
+
 interface StockChartProps {
 	// data: candlestickValueType[];
 	height: number;
@@ -29,7 +31,7 @@ interface StockChartProps {
 	width: number;
 	ratio: number;
 	chartParameters: any;
-	indicatorsArray: any;
+	indicatorsArray: any[];
 }
 
 const axisStyles = {
@@ -57,7 +59,7 @@ const crossHairStyles = {
 };
 
 class StockChart extends React.Component<StockChartProps> {
-	private margin = { left: 0, right: 58, top: 20, bottom: 24 };
+	private margin = { left: 0, right: 58, top: 20, bottom: 20 };
 	private pricesDisplayFormat = format(".3f");
 	// private xScaleProvider = discontinuousTimeScaleProviderBuilder().inputDateAccessor(
 	// 	(d: candlestickValueType) => d.datetime
@@ -67,6 +69,11 @@ class StockChart extends React.Component<StockChartProps> {
 	// }
 
 	public render() {
+		let externalIndicatorsCount = 0;
+		let internalIndicatorsCount = 0;
+		this.props.indicatorsArray.forEach((indicator, index) => {
+			indicator.indicatorType === "externalIndicator" ? externalIndicatorsCount++ : "";
+		});
 		//React-Financial-Charts defaults
 		const { height, ratio, width } = this.props;
 		const dateTimeFormat = "%Y-%m-%d";
@@ -77,10 +84,9 @@ class StockChart extends React.Component<StockChartProps> {
 		const xExtents = [min, max + 5];
 		const gridHeight = height - margin.top - margin.bottom;
 		const barChartHeight = gridHeight / 9;
-		const barChartOrigin = (_: number, h: number) => [0, h - barChartHeight - 20];
-		const chartHeight = gridHeight - 20;
+		const barChartOrigin = (_: number, h: number) => [0, chartHeight - barChartHeight];
+		const chartHeight = gridHeight - externalIndicatorsCount * 130 - 30 * externalIndicatorsCount;
 		const timeDisplayFormat = timeFormat(dateTimeFormat);
-
 		return (
 			<ChartCanvas
 				height={height}
@@ -125,6 +131,25 @@ class StockChart extends React.Component<StockChartProps> {
 
 					<OHLCTooltip labelFill={"#FFFFFF"} fontSize={15} textFill={this.textFill} origin={[8, 16]} />
 				</Chart>
+				{this.props.indicatorsArray.map((ChartInternalIndicator: any, index: number) => {
+					return ChartInternalIndicator.indicatorType === "externalIndicator" ? (
+						// @ts-ignore
+						<Chart
+							id={uuid()}
+							key={uuid()}
+							origin={[
+								0,
+								chartHeight + 30 + 30 * (index - internalIndicatorsCount) + (index - internalIndicatorsCount) * 130,
+							]}
+							height={130}
+							yExtents={[0, 100]}
+						>
+							{IndicatorsDb({ ...ChartInternalIndicator, positionMultiplier: index, chartHeight: chartHeight })}
+						</Chart>
+					) : (
+						internalIndicatorsCount++
+					);
+				})}
 				<CrossHairCursor />
 			</ChartCanvas>
 		);

@@ -71,7 +71,7 @@ const ChartResult = () => {
 			<span className="sr-only">Loading...</span>
 		</div>
 	) : (
-		<div className="w-[100%] mt-2 ">
+		<div className="w-[100%] mt-6 ">
 			<div className="flex justify-between">
 				<div className="flex  gap-4">
 					<IndicatorsModal
@@ -82,7 +82,7 @@ const ChartResult = () => {
 
 					<IndicatorsListModal indicatorsArray={indicatorsArray} setindicatorsArray={setindicatorsArrayFunc} />
 				</div>
-				<h1 className="text-FA-Primary-yellow-vivid-400 text-lg mobile:text-sm">
+				<h1 className="text-FA-Primary-yellow-vivid-400 text-lg mobile:text-sm font-[300]">
 					{data?.meta?.symbol} {data?.meta?.symbol ? " - " : ""} {data?.meta?.exchange}
 				</h1>
 			</div>
@@ -91,7 +91,7 @@ const ChartResult = () => {
 				chartParameters={chartParameters}
 				setindicatorsArray={setindicatorsArrayFunc}
 			/>
-			<div style={{ height: "100%", width: "100%" }}>
+			<div style={{ height: "100%", width: "100%", resize: "both" }}>
 				{chartParameters && chartParameters.data && isSuccess === true ? (
 					<StockChart indicatorsArray={indicatorsArray} chartParameters={chartParameters} />
 				) : (

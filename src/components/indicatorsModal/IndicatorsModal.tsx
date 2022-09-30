@@ -14,6 +14,7 @@ const IndicatorsModal = (props: any) => {
 			...indicatorParams,
 			chartParameters: props.chartParameters,
 		});
+		console.log("Generated component", generatedComponent);
 		const checkDuplicates = props.indicatorsArray.filter((indicator: any) => {
 			return indicator.name === indicatorParams.name + " - " + indicatorParams.period;
 		});
@@ -51,7 +52,7 @@ const IndicatorsModal = (props: any) => {
 	};
 
 	const handleChangeNumber = (e: any) => {
-		console.log(e);
+		// console.log(e);
 		const id = e.target.id;
 		const value = e.target.valueAsNumber;
 		setIndicatorParams({ ...indicatorParams, [id]: value });
@@ -125,7 +126,9 @@ const IndicatorsModal = (props: any) => {
 								<option value='{"name":"Simple Moving Average", "indicatorType":"internalIndicator"}'>
 									Simple Moving Average
 								</option>
-								<option value="RSI">Relative Strength Index</option>
+								<option value='{"name":"Relative Strength Index", "indicatorType":"externalIndicator"}'>
+									Relative Strength Index
+								</option>
 								<option value="MACD">MACD</option>
 							</select>
 							{IndicatorsModalDb(indicatorParams, allFunctions)}

@@ -73,3 +73,21 @@ export type SmaIndicatorTypes = {
     id: number,
 
 }
+
+
+export type RSIIndicatorTypes = {
+    data: candlestickValueType[],
+    chartParameters: chartParametersType,
+    period: number,
+    id: number | string,
+    height: number,
+    width: number,
+    ratio: number,
+    positionMultiplier: number,
+    overboughtThreshold: number,
+    oversoldThreshold: number,
+    color: string
+    chartHeight: number
+    lineWidth: number,
+
+}

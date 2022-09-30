@@ -22,6 +22,18 @@ const IndicatorsInitialValuesDb = (props: Record<string, any>) => {
 				chartParameters: props.chartParameters,
 				positionMultiplier: props.positionMultiplier,
 			};
+		case props.name.startsWith("Relative Strength Index"):
+			return {
+				name: props.name,
+				indicatorType: props.indicatorType,
+				color: "#FFFFFF",
+				period: 26,
+				lineWidth: 2,
+				overboughtThreshold: 70,
+				oversoldThreshold: 30,
+				chartParameters: props.chartParameters,
+				positionMultiplier: props.positionMultiplier,
+			};
 		default:
 			return { name: "" };
 	}
