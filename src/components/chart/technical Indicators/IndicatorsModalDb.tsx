@@ -346,7 +346,7 @@ const IndicatorsModalDb = (props: Record<string, any>, allFunctions: any) => {
 				</>
 			);
 		default:
-			break;
+			return <></>;
 	}
 };
 
