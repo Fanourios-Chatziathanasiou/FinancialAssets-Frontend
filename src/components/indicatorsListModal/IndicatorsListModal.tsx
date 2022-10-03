@@ -27,7 +27,7 @@ const IndicatorsListModal = (props: any) => {
 	const handleDelete = (currentIndicator: any) => {
 		const filteredArray = props.indicatorsArray.filter((indicator: any) => {
 			console.log("clicked indicator", currentIndicator);
-			return indicator.name !== currentIndicator.name;
+			return indicator.id !== currentIndicator.id;
 		});
 		props.setIndicatorsArray(filteredArray);
 	};

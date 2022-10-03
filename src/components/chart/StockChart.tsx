@@ -110,13 +110,16 @@ class StockChart extends React.Component<StockChartProps> {
 				<Chart id={3} height={chartHeight} yExtents={this.candleChartExtents} padding={{ top: 20, bottom: 70 }}>
 					<XAxis {...axisStyles} showGridLines showTicks={true} showTickLabel={true} />
 					<YAxis {...axisStyles} showGridLines tickFormat={this.pricesDisplayFormat} />
-					{this.props.indicatorsArray.map((ChartInternalIndicator: any, index: number) => {
-						return ChartInternalIndicator.indicatorType === "internalIndicator" ? (
+					{this.props.indicatorsArray
+						.filter((obj) => obj.indicatorType === "internalIndicator")
+						.map((ChartInternalIndicator: any, index: number) => (
 							<React.Fragment key={uuid()}>
-								{IndicatorsDb({ ...ChartInternalIndicator, positionMultiplier: index })}
+								{IndicatorsDb({
+									...ChartInternalIndicator,
+									positionMultiplier: index,
+								})}
 							</React.Fragment>
-						) : null;
-					})}
+						))}
 					<CandlestickSeries />
 
 					<MouseCoordinateY rectWidth={margin.right} displayFormat={this.pricesDisplayFormat} {...coordinateStyles} />
@@ -133,8 +136,9 @@ class StockChart extends React.Component<StockChartProps> {
 					<OHLCTooltip labelFill={"#FFFFFF"} fontSize={15} textFill={this.textFill} origin={[8, 16]} />
 				</Chart>
 
-				{this.props.indicatorsArray.map((ChartInternalIndicator: any, index: number) => {
-					return ChartInternalIndicator.indicatorType === "externalIndicator" ? (
+				{this.props.indicatorsArray
+					.filter((obj) => obj.indicatorType === "externalIndicator")
+					.map((ChartInternalIndicator: any, index: number) => (
 						// @ts-ignore
 						<Chart
 							id={uuid()}
@@ -154,10 +158,7 @@ class StockChart extends React.Component<StockChartProps> {
 								indicatorsArray: this.props.indicatorsArray,
 							})}
 						</Chart>
-					) : (
-						internalIndicatorsCount++
-					);
-				})}
+					))}
 				<CrossHairCursor />
 			</ChartCanvas>
 		);
@@ -191,7 +192,7 @@ class StockChart extends React.Component<StockChartProps> {
 	};
 }
 
-export default withSize({ style: { minHeight: "80vh" } })(withDeviceRatio()(StockChart));
+export default withSize({ style: { minHeight: "78vh" } })(withDeviceRatio()(StockChart));
 
 // export const MinutesStockChart = withOHLCData("MINUTES")(
 // 	withSize({ style: { minHeight: 600 } })(withDeviceRatio()(StockChart))

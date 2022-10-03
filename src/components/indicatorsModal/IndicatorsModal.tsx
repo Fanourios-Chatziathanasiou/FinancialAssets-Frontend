@@ -16,7 +16,7 @@ const IndicatorsModal = (props: any) => {
 		});
 		console.log("Generated component", generatedComponent);
 		const checkDuplicates = props.indicatorsArray.filter((indicator: any) => {
-			return indicator.name === indicatorParams.name + " - " + indicatorParams.period;
+			return indicator.name === generatedComponent.name;
 		});
 
 		const isGeneratedComponentParameterUndefined = Object.values(generatedComponent).findIndex((el) => el === undefined);
