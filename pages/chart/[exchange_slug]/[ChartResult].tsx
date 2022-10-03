@@ -16,7 +16,7 @@ const ChartResult = () => {
 	//we create indicators inside <IndicatorsModal/> but render it on the StockChart).
 	const [chartParameters, setChartParameters] = useState<chartParametersType>();
 	//The array of the *internal* indicators (Indicators placed inside the chart-excluding Volume).
-	const [indicatorsArray, setindicatorsArray] = useState<JSX.Element[]>([]);
+	const [indicatorsArray, setIndicatorsArray] = useState<JSX.Element[]>([]);
 	useEffect(() => {
 		console.log(indicatorsArray);
 	}, [indicatorsArray]);
@@ -57,8 +57,8 @@ const ChartResult = () => {
 		}
 	}, [isSuccess]);
 
-	function setindicatorsArrayFunc(el: any) {
-		setindicatorsArray(el);
+	function setIndicatorsArrayFunc(el: any) {
+		setIndicatorsArray(el);
 	}
 
 	return isSuccess === false ? (
@@ -77,10 +77,10 @@ const ChartResult = () => {
 					<IndicatorsModal
 						indicatorsArray={indicatorsArray}
 						chartParameters={chartParameters}
-						setindicatorsArray={setindicatorsArrayFunc}
+						setIndicatorsArray={setIndicatorsArrayFunc}
 					/>
 
-					<IndicatorsListModal indicatorsArray={indicatorsArray} setindicatorsArray={setindicatorsArrayFunc} />
+					<IndicatorsListModal indicatorsArray={indicatorsArray} setIndicatorsArray={setIndicatorsArrayFunc} />
 				</div>
 				<h1 className="text-FA-Primary-yellow-vivid-400 text-lg mobile:text-sm font-[300]">
 					{data?.meta?.symbol} {data?.meta?.symbol ? " - " : ""} {data?.meta?.exchange}
@@ -89,11 +89,15 @@ const ChartResult = () => {
 			<IndicatorsEditorModal
 				indicatorsArray={indicatorsArray}
 				chartParameters={chartParameters}
-				setindicatorsArray={setindicatorsArrayFunc}
+				setIndicatorsArray={setIndicatorsArrayFunc}
 			/>
 			<div style={{ height: "100%", width: "100%", resize: "both" }}>
 				{chartParameters && chartParameters.data && isSuccess === true ? (
-					<StockChart indicatorsArray={indicatorsArray} chartParameters={chartParameters} />
+					<StockChart
+						indicatorsArray={indicatorsArray}
+						chartParameters={chartParameters}
+						setIndicatorsArray={setIndicatorsArrayFunc}
+					/>
 				) : (
 					""
 				)}

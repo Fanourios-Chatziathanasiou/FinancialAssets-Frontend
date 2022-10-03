@@ -29,7 +29,7 @@ const IndicatorsListModal = (props: any) => {
 			console.log("clicked indicator", currentIndicator);
 			return indicator.name !== currentIndicator.name;
 		});
-		props.setindicatorsArray(filteredArray);
+		props.setIndicatorsArray(filteredArray);
 	};
 
 	return (

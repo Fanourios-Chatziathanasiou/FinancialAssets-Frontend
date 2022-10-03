@@ -32,6 +32,7 @@ interface StockChartProps {
 	ratio: number;
 	chartParameters: any;
 	indicatorsArray: any[];
+	setIndicatorsArray: any;
 }
 
 const axisStyles = {
@@ -131,6 +132,7 @@ class StockChart extends React.Component<StockChartProps> {
 
 					<OHLCTooltip labelFill={"#FFFFFF"} fontSize={15} textFill={this.textFill} origin={[8, 16]} />
 				</Chart>
+
 				{this.props.indicatorsArray.map((ChartInternalIndicator: any, index: number) => {
 					return ChartInternalIndicator.indicatorType === "externalIndicator" ? (
 						// @ts-ignore
@@ -142,9 +144,15 @@ class StockChart extends React.Component<StockChartProps> {
 								chartHeight + 30 + 30 * (index - internalIndicatorsCount) + (index - internalIndicatorsCount) * 130,
 							]}
 							height={130}
-							yExtents={[0, 100]}
+							yExtents={this.props.indicatorsArray[index].yAccessor}
 						>
-							{IndicatorsDb({ ...ChartInternalIndicator, positionMultiplier: index, chartHeight: chartHeight })}
+							{IndicatorsDb({
+								...ChartInternalIndicator,
+								positionMultiplier: index,
+								chartHeight: chartHeight,
+								setIndicatorsArray: this.props.setIndicatorsArray,
+								indicatorsArray: this.props.indicatorsArray,
+							})}
 						</Chart>
 					) : (
 						internalIndicatorsCount++

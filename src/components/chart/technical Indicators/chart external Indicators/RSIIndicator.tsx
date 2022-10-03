@@ -27,6 +27,15 @@ const axisStyles = {
 };
 
 class RSIIndicator extends React.Component<RSIIndicatorTypes> {
+	constructor(props) {
+		super(props);
+		if (typeof this.props.indicatorsArray[this.props.positionMultiplier].yAccessor === typeof []) {
+			const newel = [...this.props.indicatorsArray];
+			console.log(newel);
+			newel[this.props.positionMultiplier].yAccessor = this.rsiCalculator.accessor();
+			this.props.setIndicatorsArray(newel);
+		}
+	}
 	private readonly margin = { left: 0, right: 0, top: 0, bottom: 0 };
 	// private readonly xScaleProvider = discontinuousTimeScaleProviderBuilder().inputDateAccessor((d: IOHLCData) => d.date);
 	private pricesDisplayFormat = format(".1f");

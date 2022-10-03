@@ -28,7 +28,7 @@ const IndicatorsModal = (props: any) => {
 		}
 
 		if (generatedComponent !== undefined) {
-			props.setindicatorsArray((prevState: any) => [...prevState, generatedComponent]);
+			props.setIndicatorsArray((prevState: any) => [...prevState, { ...generatedComponent, yAccessor: [0, 100] }]);
 			selectRef.current!.selectedIndex = 0;
 			setIndicatorParams({ name: "" });
 		} else {

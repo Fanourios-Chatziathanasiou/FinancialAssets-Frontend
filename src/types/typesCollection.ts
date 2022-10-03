@@ -51,6 +51,7 @@ export type chartParametersType = {
     xScale: any,
     xAccessor: (data: any) => number,
     displayXAccessor: (data: any) => number;
+
 }
 
 export type EmaIndicatorTypes = {
@@ -89,6 +90,8 @@ export type RSIIndicatorTypes = {
     color: string
     chartHeight: number
     lineWidth: number,
+    indicatorsArray: any[];
+    setIndicatorsArray: any;
 
 }
 
@@ -99,4 +102,8 @@ export type MACDIndicatorTypes = {
     signalLine: number;
     slowEMA: number;
     id: number | string;
+    setChartParameters: any;
+    indicatorsArray: any[];
+    setIndicatorsArray: any;
+    positionMultiplier: number;
 }

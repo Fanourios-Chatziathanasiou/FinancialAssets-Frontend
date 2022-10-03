@@ -46,6 +46,8 @@ const IndicatorsDb = (props: Record<string, any>) => {
 					id={props.id}
 					overboughtThreshold={props.overboughtThreshold}
 					oversoldThreshold={props.oversoldThreshold}
+					indicatorsArray={props.indicatorsArray}
+					setIndicatorsArray={props.setIndicatorsArray}
 					lineWidth={props.lineWidth}
 				/>
 			);
@@ -59,6 +61,9 @@ const IndicatorsDb = (props: Record<string, any>) => {
 					fastEMA={props.fastEMA}
 					slowEMA={props.slowEMA}
 					signalLine={props.signalLine}
+					indicatorsArray={props.indicatorsArray}
+					setIndicatorsArray={props.setIndicatorsArray}
+					positionMultiplier={props.positionMultiplier}
 				/>
 			);
 		default:

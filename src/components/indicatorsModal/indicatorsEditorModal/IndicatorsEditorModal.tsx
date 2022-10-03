@@ -43,7 +43,7 @@ const IndicatorsEditorModal = (props: any) => {
 		});
 
 		if (generatedComponent !== undefined) {
-			props.setindicatorsArray((prevState: JSX.Element[]) => prevState.concat(generatedComponent));
+			props.setIndicatorsArray((prevState: JSX.Element[]) => prevState.concat(generatedComponent));
 		} else {
 			console.log("This Combination does not exist in the database");
 		}
