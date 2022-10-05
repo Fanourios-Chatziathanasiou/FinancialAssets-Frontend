@@ -3,7 +3,7 @@ import React from "react";
 //This file will contain all the parameters required for an indicator to render.
 //Different Select options from the popup modal will end up providing different Incicator
 //components
-const IndicatorsModalDb = (props: Record<string, any>, allFunctions: any) => {
+const IndicatorsModalDb = (props: Record<string, any>, allFunctions: any): JSX.Element => {
 	switch (true) {
 		case props.name.startsWith("Exponential Moving Average"):
 			return (
@@ -116,8 +116,8 @@ const IndicatorsModalDb = (props: Record<string, any>, allFunctions: any) => {
 							type="color"
 							id="color"
 							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[6rem] h-[3rem] p-0 m-0 border-none hover:cursor-pointer"
-							placeholder="#FFFFFF"
-							defaultValue={"#FFFFFF"}
+							placeholder={props.color}
+							defaultValue={props.color}
 							onChange={allFunctions.handleChangeColor}
 							required
 						/>
@@ -184,8 +184,8 @@ const IndicatorsModalDb = (props: Record<string, any>, allFunctions: any) => {
 							type="color"
 							id="color"
 							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[6rem] h-[3rem] p-0 m-0 border-none hover:cursor-pointer"
-							placeholder="#FFFFFF"
-							defaultValue={"#FFFFFF"}
+							placeholder={props.color}
+							defaultValue={props.color}
 							onChange={allFunctions.handleChangeColor}
 							required
 						/>

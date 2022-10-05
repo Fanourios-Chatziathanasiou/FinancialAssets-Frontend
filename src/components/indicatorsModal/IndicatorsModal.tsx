@@ -1,20 +1,22 @@
 import { Button, Modal } from "flowbite-react";
 import React, { useRef, useState } from "react";
 import uuid from "react-uuid";
+import { IndicatorsArrayTypes, IndicatorsModalTypes } from "../../types/typesCollection";
 import IndicatorsInitialValuesDb from "../chart/technical Indicators/IndicatorsInitialValuesDb";
 import IndicatorsModalDb from "../chart/technical Indicators/IndicatorsModalDb";
 import indicatorsModalGeneratedComponentDb from "./indicatorsModalGeneratedComponentDb";
 
-const IndicatorsModal = (props: any) => {
+const IndicatorsModal = (props: IndicatorsModalTypes): JSX.Element => {
 	const [isShowing, setIsShowing] = useState<boolean>(false);
 	const [indicatorParams, setIndicatorParams] = useState<Record<string, any>>({ name: "" });
 	const selectRef = useRef<HTMLSelectElement>(null);
 	const handleApply = () => {
+		//The generated component indicator wutg the specified parameters.
 		const generatedComponent = indicatorsModalGeneratedComponentDb({
 			...indicatorParams,
 			chartParameters: props.chartParameters,
 		});
-		console.log("Generated component", generatedComponent);
+		// console.log("Generated component", generatedComponent);
 		const checkDuplicates = props.indicatorsArray.filter((indicator: any) => {
 			return indicator.name === generatedComponent.name;
 		});
@@ -28,11 +30,14 @@ const IndicatorsModal = (props: any) => {
 		}
 
 		if (generatedComponent !== undefined) {
-			props.setIndicatorsArray((prevState: any) => [...prevState, { ...generatedComponent, yAccessor: [0, 100] }]);
+			props.setIndicatorsArray((prevState: IndicatorsArrayTypes) => [
+				...prevState,
+				{ ...generatedComponent, yAccessor: [0, 100] },
+			]);
 			selectRef.current!.selectedIndex = 0;
 			setIndicatorParams({ name: "" });
 		} else {
-			console.log("This Combination does not exist in the database");
+			alert("This Combination does not exist in the database");
 		}
 		setIsShowing(false);
 	};
@@ -42,7 +47,7 @@ const IndicatorsModal = (props: any) => {
 		const valuesJSON = JSON.parse(e.target.value);
 		const initialValues = IndicatorsInitialValuesDb({ ...valuesJSON, positionMultiplier: positionMultiplier });
 		setIndicatorParams(initialValues);
-		console.log(initialValues);
+		// console.log(initialValues);
 	};
 	const handleChangeColor = (e: any) => {
 		const colorObject = {
@@ -86,9 +91,6 @@ const IndicatorsModal = (props: any) => {
 
 	return (
 		<React.Fragment>
-			{/* <button className="border-2 rounded-lg p-0 m-0 " onClick={onClick}>
-				Indicators
-			</button> */}
 			<Button
 				style={{
 					paddingBlock: "0.1rem",
@@ -117,8 +119,9 @@ const IndicatorsModal = (props: any) => {
 								id="name"
 								className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5  leading-[150%] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 								onChange={handleChange}
+								defaultValue='{"name":"none"}'
 							>
-								<option defaultChecked selected value='{"name":"none"}'>
+								<option defaultChecked value='{"name":"none"}'>
 									Select Technical Indicator
 								</option>
 								<option value='{"name":"Exponential Moving Average", "indicatorType":"internalIndicator"}'>

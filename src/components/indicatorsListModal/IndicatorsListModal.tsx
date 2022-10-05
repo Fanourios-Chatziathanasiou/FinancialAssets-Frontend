@@ -1,10 +1,20 @@
 import { Button, Checkbox, Label, Modal, Table, TextInput } from "flowbite-react";
 import React, { useState } from "react";
 import uuid from "react-uuid";
-import indicatorsModalGeneratedComponentDb from "../indicatorsModal/indicatorsModalGeneratedComponentDb";
+import { IndicatorsListModalTypes, IndicatorTypes } from "../../types/typesCollection";
+import IndicatorsEditorModal from "../indicatorsModal/indicatorsEditorModal/IndicatorsEditorModal";
 
-const IndicatorsListModal = (props: any) => {
+const IndicatorsListModal = (props: IndicatorsListModalTypes): JSX.Element => {
 	const [isShowing, setIsShowing] = useState<boolean>(false);
+	const [isEditorModalShowing, setIsEditorModalShowing] = useState<boolean>(false);
+	const [editedIndicator, setEditedIndicator] = useState<any>();
+
+	const setEditedIndicatorFunc = (editedIndicator: IndicatorTypes | null): void => {
+		setEditedIndicator(editedIndicator);
+	};
+	const setIsEditorModalShowingFunc = (isShowing: boolean): void => {
+		setIsEditorModalShowing(isShowing);
+	};
 
 	const onClick = () => {
 		setIsShowing(true);
@@ -26,10 +36,15 @@ const IndicatorsListModal = (props: any) => {
 
 	const handleDelete = (currentIndicator: any) => {
 		const filteredArray = props.indicatorsArray.filter((indicator: any) => {
-			console.log("clicked indicator", currentIndicator);
+			// console.log("clicked indicator", currentIndicator);
 			return indicator.id !== currentIndicator.id;
 		});
 		props.setIndicatorsArray(filteredArray);
+	};
+
+	const handleEdit = (currentIndicator: any) => {
+		setEditedIndicator(currentIndicator);
+		setIsEditorModalShowing(true);
 	};
 
 	return (
@@ -45,7 +60,6 @@ const IndicatorsListModal = (props: any) => {
 			>
 				Indicators List
 			</Button>
-
 			<Modal show={isShowing} popup={true} onClose={onClose} style={{ height: "100%", paddingInline: "25%" }}>
 				<Modal.Header />
 				<Modal.Body>
@@ -69,7 +83,10 @@ const IndicatorsListModal = (props: any) => {
 											</Table.Cell>
 
 											<Table.Cell>
-												<span className="font-medium text-blue-600 hover:underline dark:text-blue-500 cursor-pointer">
+												<span
+													className="font-medium text-blue-600 hover:underline dark:text-blue-500 cursor-pointer"
+													onClick={() => handleEdit(indicator)}
+												>
 													Edit
 												</span>
 											</Table.Cell>
@@ -89,6 +106,14 @@ const IndicatorsListModal = (props: any) => {
 					</Table>
 				</Modal.Body>
 			</Modal>
+			<IndicatorsEditorModal
+				isEditorModalShowing={isEditorModalShowing}
+				setIsEditorModalShowing={setIsEditorModalShowingFunc}
+				editedIndicator={editedIndicator}
+				setEditedIndicator={setEditedIndicatorFunc}
+				indicatorsArray={props.indicatorsArray}
+				setIndicatorsArray={props.setIndicatorsArray}
+			/>
 		</React.Fragment>
 	);
 };

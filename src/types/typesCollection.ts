@@ -54,6 +54,13 @@ export type chartParametersType = {
 
 }
 
+export type GlobalIndicatorTypes = {
+    name?: string;
+    indicatorName?: string;
+    indicatorType?: string;
+    id?: string | number
+}
+
 export type EmaIndicatorTypes = {
     data: candlestickValueType[],
     period: number,
@@ -61,9 +68,9 @@ export type EmaIndicatorTypes = {
     color: string,
     positionMultiplier: number,
     chartParameters: chartParametersType,
-    id: number,
 
-}
+
+} & GlobalIndicatorTypes
 export type SmaIndicatorTypes = {
     data: candlestickValueType[],
     period: number,
@@ -71,16 +78,16 @@ export type SmaIndicatorTypes = {
     color: string,
     positionMultiplier: number,
     chartParameters: chartParametersType,
-    id: number,
 
-}
+
+} & GlobalIndicatorTypes
 
 
 export type RSIIndicatorTypes = {
+
     data: candlestickValueType[],
     chartParameters: chartParametersType,
     period: number,
-    id: number | string,
     height: number,
     width: number,
     ratio: number,
@@ -93,7 +100,7 @@ export type RSIIndicatorTypes = {
     indicatorsArray: any[];
     setIndicatorsArray: any;
 
-}
+} & GlobalIndicatorTypes
 
 export type MACDIndicatorTypes = {
     data: candlestickValueType[];
@@ -101,9 +108,33 @@ export type MACDIndicatorTypes = {
     fastEMA: number;
     signalLine: number;
     slowEMA: number;
-    id: number | string;
     setChartParameters: any;
     indicatorsArray: any[];
     setIndicatorsArray: any;
     positionMultiplier: number;
+} & GlobalIndicatorTypes
+
+export type IndicatorTypes = Partial<(MACDIndicatorTypes | RSIIndicatorTypes | SmaIndicatorTypes | EmaIndicatorTypes)>
+
+export type IndicatorsArrayTypes = IndicatorTypes[]
+
+
+export type IndicatorsListModalTypes = {
+    indicatorsArray: IndicatorsArrayTypes;
+    setIndicatorsArray: (indicatorsArray: IndicatorsArrayTypes) => void
+}
+
+export type IndicatorsEditorModalTypes = {
+    isEditorModalShowing: boolean;
+    setIsEditorModalShowing: (isShowing: boolean) => void;
+    editedIndicator: IndicatorTypes;
+    setEditedIndicator: (editedIndicator: IndicatorTypes | null) => void;
+    indicatorsArray: IndicatorsArrayTypes;
+    setIndicatorsArray: (indicatorsArray: IndicatorsArrayTypes) => void
+}
+
+export type IndicatorsModalTypes = {
+    indicatorsArray: IndicatorsArrayTypes;
+    chartParameters: chartParametersType | null;
+    setIndicatorsArray: any
 }

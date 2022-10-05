@@ -27,11 +27,10 @@ const axisStyles = {
 };
 
 class RSIIndicator extends React.Component<RSIIndicatorTypes> {
-	constructor(props) {
+	constructor(props: any) {
 		super(props);
 		if (typeof this.props.indicatorsArray[this.props.positionMultiplier].yAccessor === typeof []) {
 			const newel = [...this.props.indicatorsArray];
-			console.log(newel);
 			newel[this.props.positionMultiplier].yAccessor = this.rsiCalculator.accessor();
 			this.props.setIndicatorsArray(newel);
 		}

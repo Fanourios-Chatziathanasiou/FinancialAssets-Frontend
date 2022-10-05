@@ -12,7 +12,7 @@ class SmaIndicator extends React.Component<SmaIndicatorTypes> {
 		const { period, lineWidth, color } = this.props;
 
 		const smaCalculator = sma()
-			.id(this.props.id)
+			.id(Number(this.props.id))
 			.options({ windowSize: period })
 			.merge((d: any, c: any) => {
 				d[`SMA_${this.props.period}`] = c;

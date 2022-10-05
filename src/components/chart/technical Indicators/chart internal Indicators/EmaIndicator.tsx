@@ -13,7 +13,7 @@ class EmaIndicator extends React.Component<EmaIndicatorTypes> {
 		const { period, lineWidth, color } = this.props;
 
 		const emaCalculator = ema()
-			.id(this.props.id)
+			.id(Number(this.props.id))
 			.options({ windowSize: period })
 			.merge((d: any, c: any) => {
 				d[`EMA_${this.props.period}`] = c;

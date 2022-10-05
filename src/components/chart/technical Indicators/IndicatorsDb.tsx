@@ -1,5 +1,6 @@
 import React from "react";
 import uuid from "react-uuid";
+import { EmaIndicatorTypes, IndicatorTypes } from "../../../types/typesCollection";
 import MACDIndicator from "./chart external Indicators/MACDIndicator";
 import RSIIndicator from "./chart external Indicators/RSIIndicator";
 import EmaIndicator from "./chart internal Indicators/EmaIndicator";
@@ -8,7 +9,7 @@ import SmaIndicator from "./chart internal Indicators/SmaIndicator";
 //This file will contain all the parameters required for an indicator to render.
 //Different Select options from the popup modal will end up providing different Incicator
 //components
-const IndicatorsDb = (props: Record<string, any>) => {
+const IndicatorsDb = (props: Record<string, any>): React.ReactNode => {
 	switch (true) {
 		case props.name.startsWith("Exponential Moving Average"):
 			return (

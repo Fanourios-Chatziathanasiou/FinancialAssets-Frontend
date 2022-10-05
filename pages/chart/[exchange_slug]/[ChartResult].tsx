@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useGetAssetDataByNameQuery } from "../../../src/services/assetDataApi";
 import { useAppDispatch } from "../../../src/app/hooks";
 import StockChart from "../../../src/components/chart/StockChart";
-import { candlestickValueType, chartParametersType } from "../../../src/types/typesCollection";
+import { candlestickValueType, chartParametersType, IndicatorsArrayTypes } from "../../../src/types/typesCollection";
 import { discontinuousTimeScaleProviderBuilder } from "react-financial-charts";
 import IndicatorsModal from "../../../src/components/indicatorsModal/IndicatorsModal";
 import { IOHLCData } from "../../../src/components/chart/iOHLCData";
@@ -14,12 +14,9 @@ const ChartResult = () => {
 	//chartparameters hold the shared element between chart and indicators.That way we avoid initializing them every time.
 	//It comes handy when we have to create Indicators on a different component than the one we render the chart. (For example
 	//we create indicators inside <IndicatorsModal/> but render it on the StockChart).
-	const [chartParameters, setChartParameters] = useState<chartParametersType>();
+	const [chartParameters, setChartParameters] = useState<chartParametersType | null>(null);
 	//The array of the *internal* indicators (Indicators placed inside the chart-excluding Volume).
-	const [indicatorsArray, setIndicatorsArray] = useState<JSX.Element[]>([]);
-	useEffect(() => {
-		console.log(indicatorsArray);
-	}, [indicatorsArray]);
+	const [indicatorsArray, setIndicatorsArray] = useState<IndicatorsArrayTypes>([]);
 	//Nextjs route parameter
 	const router = useRouter();
 	//Nextjs route parameter
@@ -32,7 +29,7 @@ const ChartResult = () => {
 	//When the data is ready
 	useEffect(() => {
 		if (isSuccess === true) {
-			console.log(data);
+			// console.log(data);
 			//convert the datetime from string to Date Object and change its order
 			let dataCopy = JSON.parse(JSON.stringify(data));
 			dataCopy.values.reverse();
@@ -57,8 +54,8 @@ const ChartResult = () => {
 		}
 	}, [isSuccess]);
 
-	function setIndicatorsArrayFunc(el: any) {
-		setIndicatorsArray(el);
+	function setIndicatorsArrayFunc(indicatorsArray: IndicatorsArrayTypes) {
+		setIndicatorsArray(indicatorsArray);
 	}
 
 	return isSuccess === false ? (
@@ -86,11 +83,7 @@ const ChartResult = () => {
 					{data?.meta?.symbol} {data?.meta?.symbol ? " - " : ""} {data?.meta?.exchange}
 				</h1>
 			</div>
-			<IndicatorsEditorModal
-				indicatorsArray={indicatorsArray}
-				chartParameters={chartParameters}
-				setIndicatorsArray={setIndicatorsArrayFunc}
-			/>
+
 			<div style={{ height: "100%", width: "100%", resize: "both" }}>
 				{chartParameters && chartParameters.data && isSuccess === true ? (
 					<StockChart

@@ -5,6 +5,7 @@ const IndicatorsInitialValuesDb = (props: Record<string, any>) => {
 		case props.name.startsWith("Exponential Moving Average"):
 			return {
 				name: props.name,
+				indicatorName: props.name,
 				indicatorType: props.indicatorType,
 				color: "#FFFFFF",
 				period: 26,
@@ -15,6 +16,7 @@ const IndicatorsInitialValuesDb = (props: Record<string, any>) => {
 		case props.name.startsWith("Simple Moving Average"):
 			return {
 				name: props.name,
+				indicatorName: props.name,
 				indicatorType: props.indicatorType,
 				color: "#FFFFFF",
 				period: 26,
@@ -25,6 +27,7 @@ const IndicatorsInitialValuesDb = (props: Record<string, any>) => {
 		case props.name.startsWith("Relative Strength Index"):
 			return {
 				name: props.name,
+				indicatorName: props.name,
 				indicatorType: props.indicatorType,
 				color: "#FFFFFF",
 				period: 26,
@@ -37,6 +40,7 @@ const IndicatorsInitialValuesDb = (props: Record<string, any>) => {
 		case props.name.startsWith("Moving Average Convergence Divergence"):
 			return {
 				name: props.name,
+				indicatorName: props.name,
 				indicatorType: props.indicatorType,
 				fastEMA: 12,
 				slowEMA: 26,

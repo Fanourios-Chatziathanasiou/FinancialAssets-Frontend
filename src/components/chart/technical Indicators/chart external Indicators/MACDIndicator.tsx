@@ -27,7 +27,7 @@ const axisStyles = {
 };
 
 class MACDIndicator extends React.Component<MACDIndicatorTypes> {
-	constructor(props) {
+	constructor(props: any) {
 		super(props);
 
 		if (typeof this.props.indicatorsArray[this.props.positionMultiplier].yAccessor === typeof []) {

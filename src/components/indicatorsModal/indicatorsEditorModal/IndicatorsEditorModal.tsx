@@ -1,24 +1,80 @@
-import { Modal } from "flowbite-react";
-import React, { useState } from "react";
+import { Button, Modal } from "flowbite-react";
+import React, { useEffect, useRef, useState } from "react";
 import uuid from "react-uuid";
-import IndicatorsDb from "../../chart/technical Indicators/IndicatorsDb";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { updateisIndicatorsModalShowing } from "../../../features/isIndicatorsModalShowingSlice";
+import { IndicatorsEditorModalTypes } from "../../../types/typesCollection";
+import IndicatorsInitialValuesDb from "../../chart/technical Indicators/IndicatorsInitialValuesDb";
+import IndicatorsModalDb from "../../chart/technical Indicators/IndicatorsModalDb";
+import indicatorsModalGeneratedComponentDb from "./../indicatorsModalGeneratedComponentDb";
 
-//********NYI -> This component will serve as an editor for an existing indicator.**********
-const IndicatorsEditorModal = (props: any) => {
-	//Redux-Toolkit dispatch
-	const dispatch = useAppDispatch();
-	const isIndicatorsModalShowing = useAppSelector((state) => state.isIndicatorsModalShowing);
+//This Component is the "Edit" part of the IndicatorsListModal. When the user wants to edit an existing
+//indicator this component handles the parameters that need to appear in order to edit the specific indicator.
+const IndicatorsEditorModal = (props: IndicatorsEditorModalTypes): JSX.Element => {
+	//indicatorParams stores the specific indicator object that contains all the parameters
+	const [indicatorParams, setIndicatorParams] = useState<Record<string, any>>({ ...props?.editedIndicator });
+	useEffect(() => {
+		const editedIndicatorCopy = { ...props.editedIndicator };
+		editedIndicatorCopy.name = editedIndicatorCopy.indicatorName;
+		setIndicatorParams(editedIndicatorCopy);
+	}, [props.editedIndicator]);
+
+	//Apply method for the Modal.
+	const handleApply = () => {
+		//The generated component indicator wutg the specified parameters.
+		const generatedComponent = indicatorsModalGeneratedComponentDb({
+			...indicatorParams,
+		});
+		// console.log("Generated component", generatedComponent);
+
+		const isGeneratedComponentParameterUndefined = Object.values(generatedComponent).findIndex((el) => el === undefined);
+		if (isGeneratedComponentParameterUndefined !== -1) {
+			props.setIsEditorModalShowing(false);
+			return;
+		}
+
+		if (generatedComponent !== undefined) {
+			const indicatorsArrayCopy = [...props.indicatorsArray];
+			const editedIndicatorIndex = indicatorsArrayCopy.findIndex((object) => {
+				return object.id === props.editedIndicator.id;
+			});
+			indicatorsArrayCopy[editedIndicatorIndex] = generatedComponent;
+			props.setIndicatorsArray(indicatorsArrayCopy);
+		} else {
+			alert("This Combination does not exist in the database");
+		}
+		props.setIsEditorModalShowing(false);
+	};
+
+	const handleChange = (e: any) => {
+		const positionMultiplier = props.indicatorsArray.length;
+		const valuesJSON = JSON.parse(e.target.value);
+
+		const initialValues = IndicatorsInitialValuesDb({ ...valuesJSON, positionMultiplier: positionMultiplier });
+		setIndicatorParams(initialValues);
+		// console.log(initialValues);
+	};
+	const handleChangeColor = (e: any) => {
+		const colorObject = {
+			[e.target.id]: e.target.value,
+		};
+
+		setIndicatorParams({ ...indicatorParams, ...colorObject });
+	};
+
+	const handleChangeNumber = (e: any) => {
+		// console.log(e);
+		const id = e.target.id;
+		const value = e.target.valueAsNumber;
+		setIndicatorParams({ ...indicatorParams, [id]: value });
+	};
 
 	const onClick = () => {
-		dispatch(updateisIndicatorsModalShowing(true));
-		// props.setIsIndicatorsEditorModalShowing(true);
+		props.setIsEditorModalShowing(false);
 	};
 
 	const onClose = () => {
-		dispatch(updateisIndicatorsModalShowing(false));
-		// props.setIsIndicatorsEditorModalShowing(false);
+		// setIndicatorParams({ name: "" });
+		props.setIsEditorModalShowing(false);
+		props.setEditedIndicator(null);
 	};
 	function enforceMinMax(el: any) {
 		if (el.value != "") {
@@ -30,46 +86,19 @@ const IndicatorsEditorModal = (props: any) => {
 			}
 		}
 	}
-	const [indicatorParams, setIndicatorParams] = useState<Record<string, any>>({});
-	const handleApply = () => {
-		const generatedComponent = IndicatorsDb({
-			name: indicatorParams.name,
-			color: indicatorParams.color,
-			period: indicatorParams.period,
-			lineWidth: indicatorParams.lineWidth,
-			chartParameters: props.chartParameters,
-			positionMultiplier: props.indicatorsArray.length,
-			id: uuid(),
-		});
-
-		if (generatedComponent !== undefined) {
-			props.setIndicatorsArray((prevState: JSX.Element[]) => prevState.concat(generatedComponent));
-		} else {
-			console.log("This Combination does not exist in the database");
-		}
-		dispatch(updateisIndicatorsModalShowing(false));
-		// props.setIsIndicatorsEditorModalShowing(false);
-	};
-
-	const handleChange = (e: any) => {
-		// console.log(e);
-		const id = e.target.id;
-		const value = e.target.value;
-		setIndicatorParams({ ...indicatorParams, [id]: value });
-		// console.log(indicatorParams);
-	};
-
-	const handleChangeNumber = (e: any) => {
-		console.log(e);
-		const id = e.target.id;
-		const value = e.target.valueAsNumber;
-		setIndicatorParams({ ...indicatorParams, [id]: value });
-		// console.log(indicatorParams);
+	const allFunctions = {
+		handleChangeNumber: handleChangeNumber,
+		handleChangeColor: handleChangeColor,
+		handleApply: handleApply,
 	};
 
 	return (
 		<React.Fragment>
-			<Modal show={isIndicatorsModalShowing.value} size="4xl" popup={true} onClose={onClose}>
+			{/* <button className="border-2 rounded-lg p-0 m-0 " onClick={onClick}>
+				Indicators
+			</button> */}
+
+			<Modal show={props.isEditorModalShowing} size="4xl" popup={true} onClose={onClose} style={{ height: "100%" }}>
 				<Modal.Header />
 				<Modal.Body>
 					<div className="relative p-4 w-full  h-full md:h-auto m-auto ">
@@ -77,89 +106,13 @@ const IndicatorsEditorModal = (props: any) => {
 							<h3 className="text-lg font-semibold text-gray-900 dark:text-white">Indicators Editor</h3>
 						</div>
 
-						<div className="p-6 ">
-							<label htmlFor="name" className="block  text-sm font-medium text-gray-900 dark:text-gray-400">
-								Select Indicator
-							</label>
-							<select
-								id="name"
-								className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3.5  leading-[150%] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-								onChange={handleChange}
-							>
-								<option selected value="">
-									Select Technical Indicator
-								</option>
-								<option value="EMA">Exponential Moving Average</option>
-								<option value="SMA">Simple Moving Average</option>
-								<option value="RSI">Relative Strength Index</option>
-								<option value="MACD">MACD</option>
-							</select>
-							{/* <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+						{props.editedIndicator ? IndicatorsModalDb(props.editedIndicator, allFunctions) : ""}
+
+						{/* <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                 The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to
                 ensure a common set of data rights in the European Union. It requires organizations to notify users as soon
                 as possible of high-risk data breaches that could personally affect them.
             </p> */}
-						</div>
-						<div className="p-6 ">
-							<label htmlFor="period" className="block  text-sm font-medium text-gray-900 dark:text-gray-300">
-								EMA Length
-							</label>
-							<input
-								type="number"
-								id="period"
-								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-								placeholder=""
-								min={0}
-								max={500}
-								required
-								onChange={handleChangeNumber}
-							/>
-						</div>
-						<div className="p-6 ">
-							<label htmlFor="visitors" className="block  text-sm font-medium text-gray-900 dark:text-gray-300">
-								Line Width
-							</label>
-							<input
-								type="number"
-								id="lineWidth"
-								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-								placeholder=""
-								min={0}
-								max={500}
-								required
-								onChange={handleChangeNumber}
-							/>
-						</div>
-						<div className="p-6 ">
-							<label htmlFor="color" className="  text-sm font-medium text-gray-900 dark:text-gray-300">
-								Line Color
-							</label>
-							<input
-								type="color"
-								id="color"
-								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[6rem] h-[3rem] p-0 m-0 border-none hover:cursor-pointer"
-								placeholder=""
-								onChange={handleChange}
-								required
-							/>
-						</div>
-						<div className="flex justify-end items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-							<button
-								data-modal-toggle="defaultModal"
-								type="button"
-								className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-								onClick={handleApply}
-							>
-								Apply
-							</button>
-							{/* <button
-                data-modal-toggle="defaultModal"
-                type="button"
-                className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-            >
-                Decline
-            </button> */}
-						</div>
 					</div>
 				</Modal.Body>
 			</Modal>
