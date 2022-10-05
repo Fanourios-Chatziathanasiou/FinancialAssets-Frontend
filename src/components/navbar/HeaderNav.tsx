@@ -44,13 +44,13 @@ const HeaderNav: React.FC<{}> = () => {
 				<div className={(isMenu ? "" : "hidden") + " w-full md:block md:w-auto"} id="navbar-default">
 					<ul className="flex flex-col p-4 mt-4 bg-FA-neutral-yellow-grey-100 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-[rgb(248,248,248)] dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 mobile:bg-FA-Primary-blue-grey-100">
 						<li className="">
-							<Link href="/">
+							<Link href="/Datasets">
 								<a
 									className="  block py-2 pr-4 pl-3 text-gray-700 font-[400] rounded-md md:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white
 								mobile:hover:bg-FA-Primary-purple-900 mobile:hover:text-FA-Primary-red-vivid-050"
 									aria-current="page"
 								>
-									Home
+									Datasets
 								</a>
 							</Link>
 						</li>

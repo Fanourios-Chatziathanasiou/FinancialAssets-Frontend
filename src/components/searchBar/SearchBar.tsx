@@ -7,7 +7,7 @@ import { updateInput } from "../../features/searchInputSlice";
 import { useGetSearchAssetsByNameQuery } from "../../services/searchAssetsApi";
 import SearchBarInputResults from "./SearchBarInputResults";
 
-const SearchBar: React.FC<{}> = (props) => {
+const SearchBar: React.FC<{ RouterPathName: string }> = ({ RouterPathName }) => {
 	const isFocused = useAppSelector((state) => state.isFocused);
 	const timer = useRef<any>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -29,7 +29,7 @@ const SearchBar: React.FC<{}> = (props) => {
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter" && inputValue !== "") {
 			dispatch(updateIsFocused(false));
-			Router.push("/search/" + inputValue);
+			Router.push(RouterPathName + inputValue);
 		}
 		if (e.key === "ArrowDown") {
 			console.log(document.activeElement?.attributes);
@@ -99,13 +99,13 @@ const SearchBar: React.FC<{}> = (props) => {
 							}
 							onClick={() => {
 								inputRef.current?.value ? dispatch(updateIsFocused(false)) : "";
-								inputRef.current?.value ? Router.push("/search/" + inputRef.current.value) : "";
+								inputRef.current?.value ? Router.push(RouterPathName + inputRef.current.value) : "";
 							}}
 						>
 							<img src="Assets/searchIcon.png" alt="searchIcon" className="w-[100%] p-0 border-none bg-none " />
 						</button>
 					</div>
-					<SearchBarInputResults data={data} inputValue={inputValue} />
+					<SearchBarInputResults data={data} inputValue={inputValue} inputClickedPath={RouterPathName} />
 				</div>
 			</div>
 		</div>

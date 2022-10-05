@@ -1,7 +1,7 @@
 import { Button, Checkbox, Label, Modal, Table, TextInput } from "flowbite-react";
 import React, { useState } from "react";
 import uuid from "react-uuid";
-import { IndicatorsListModalTypes, IndicatorTypes } from "../../types/typesCollection";
+import { IndicatorsListModalTypes, IndicatorTypes } from "../../../types/typesCollection";
 import IndicatorsEditorModal from "../indicatorsModal/indicatorsEditorModal/IndicatorsEditorModal";
 
 const IndicatorsListModal = (props: IndicatorsListModalTypes): JSX.Element => {

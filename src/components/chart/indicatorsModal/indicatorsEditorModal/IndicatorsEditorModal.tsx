@@ -1,9 +1,10 @@
 import { Button, Modal } from "flowbite-react";
 import React, { useEffect, useRef, useState } from "react";
 import uuid from "react-uuid";
-import { IndicatorsEditorModalTypes } from "../../../types/typesCollection";
-import IndicatorsInitialValuesDb from "../../chart/technical Indicators/IndicatorsInitialValuesDb";
-import IndicatorsModalDb from "../../chart/technical Indicators/IndicatorsModalDb";
+import { IndicatorsEditorModalTypes } from "../../../../types/typesCollection";
+import IndicatorsInitialValuesDb from "../../technical Indicators/IndicatorsInitialValuesDb";
+import IndicatorsModalDb from "../../technical Indicators/IndicatorsModalDb";
+
 import indicatorsModalGeneratedComponentDb from "./../indicatorsModalGeneratedComponentDb";
 
 //This Component is the "Edit" part of the IndicatorsListModal. When the user wants to edit an existing

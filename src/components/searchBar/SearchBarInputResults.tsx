@@ -9,6 +9,7 @@ type searchBaInputTypes = {
 	data: searchAssetsType[] | undefined;
 	// isFocused: boolean;
 	inputValue: string;
+	inputClickedPath: string;
 };
 
 export const SearchBarInputResults = React.memo(
@@ -30,7 +31,11 @@ export const SearchBarInputResults = React.memo(
 											className=" p-3  text-sm font-[600] text-FA-Primary-blue-grey-900  hover:bg-FA-Primary-blue-grey-600 hover:text-white cursor-pointer"
 										>
 											<Link
-												href={`/chart/${obj.exchange}/${obj.symbol}`}
+												href={
+													props.inputClickedPath === `/Datasets/search/`
+														? `/Datasets/search/${obj.name}`
+														: `/chart/${obj.exchange}/${obj.symbol}`
+												}
 												onClick={() => {
 													dispatch(updateIsFocused(false));
 												}}

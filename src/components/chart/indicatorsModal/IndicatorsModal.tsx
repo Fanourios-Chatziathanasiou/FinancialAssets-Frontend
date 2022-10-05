@@ -1,9 +1,9 @@
 import { Button, Modal } from "flowbite-react";
 import React, { useRef, useState } from "react";
 import uuid from "react-uuid";
-import { IndicatorsArrayTypes, IndicatorsModalTypes } from "../../types/typesCollection";
-import IndicatorsInitialValuesDb from "../chart/technical Indicators/IndicatorsInitialValuesDb";
-import IndicatorsModalDb from "../chart/technical Indicators/IndicatorsModalDb";
+import { IndicatorsArrayTypes, IndicatorsModalTypes } from "../../../types/typesCollection";
+import IndicatorsInitialValuesDb from "../technical Indicators/IndicatorsInitialValuesDb";
+import IndicatorsModalDb from "../technical Indicators/IndicatorsModalDb";
 import indicatorsModalGeneratedComponentDb from "./indicatorsModalGeneratedComponentDb";
 
 const IndicatorsModal = (props: IndicatorsModalTypes): JSX.Element => {

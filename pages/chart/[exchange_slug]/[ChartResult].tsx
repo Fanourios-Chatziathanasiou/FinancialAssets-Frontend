@@ -5,10 +5,9 @@ import { useAppDispatch } from "../../../src/app/hooks";
 import StockChart from "../../../src/components/chart/StockChart";
 import { candlestickValueType, chartParametersType, IndicatorsArrayTypes } from "../../../src/types/typesCollection";
 import { discontinuousTimeScaleProviderBuilder } from "react-financial-charts";
-import IndicatorsModal from "../../../src/components/indicatorsModal/IndicatorsModal";
 import { IOHLCData } from "../../../src/components/chart/iOHLCData";
-import IndicatorsEditorModal from "../../../src/components/indicatorsModal/indicatorsEditorModal/IndicatorsEditorModal";
-import IndicatorsListModal from "../../../src/components/indicatorsListModal/IndicatorsListModal";
+import IndicatorsListModal from "../../../src/components/chart/indicatorsListModal/IndicatorsListModal";
+import IndicatorsModal from "../../../src/components/chart/indicatorsModal/IndicatorsModal";
 
 const ChartResult = () => {
 	//chartparameters hold the shared element between chart and indicators.That way we avoid initializing them every time.
@@ -25,6 +24,7 @@ const ChartResult = () => {
 	const dispatch = useAppDispatch();
 	//React Query fetch to get the data from our endpoint.
 	const { data, isSuccess } = useGetAssetDataByNameQuery(ChartResult as string, { skip: ChartResult === undefined });
+	console.log(ChartResult);
 
 	//When the data is ready
 	useEffect(() => {
