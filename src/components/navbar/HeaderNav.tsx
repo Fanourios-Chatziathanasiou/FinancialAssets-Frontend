@@ -43,6 +43,16 @@ const HeaderNav: React.FC<{}> = () => {
 				</button>
 				<div className={(isMenu ? "" : "hidden") + " w-full md:block md:w-auto"} id="navbar-default">
 					<ul className="flex flex-col p-4 mt-4 bg-FA-neutral-yellow-grey-100 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-[rgb(248,248,248)] dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 mobile:bg-FA-Primary-blue-grey-100">
+						<li>
+							<Link href="/">
+								<a
+									className="block py-2 pr-4 pl-3 text-gray-700 font-[400] rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent
+								mobile:hover:bg-FA-Primary-purple-900 mobile:hover:text-FA-Primary-red-vivid-050"
+								>
+									Charts
+								</a>
+							</Link>
+						</li>
 						<li className="">
 							<Link href="/Datasets">
 								<a
@@ -54,6 +64,18 @@ const HeaderNav: React.FC<{}> = () => {
 								</a>
 							</Link>
 						</li>
+
+						<li>
+							<Link href="/MarketAnalysis">
+								<a
+									className="block py-2 pr-4 pl-3 text-gray-700 font-[400] rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent
+								mobile:hover:bg-FA-Primary-purple-900 mobile:hover:text-FA-Primary-red-vivid-050"
+								>
+									Market Analysis
+								</a>
+							</Link>
+						</li>
+
 						<li>
 							<Link href="/">
 								<a
@@ -61,36 +83,6 @@ const HeaderNav: React.FC<{}> = () => {
 								mobile:hover:bg-FA-Primary-purple-900 mobile:hover:text-FA-Primary-red-vivid-050"
 								>
 									About
-								</a>
-							</Link>
-						</li>
-						<li>
-							<Link href="/">
-								<a
-									className="block py-2 pr-4 pl-3 text-gray-700 font-[400] rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent
-								mobile:hover:bg-FA-Primary-purple-900 mobile:hover:text-FA-Primary-red-vivid-050"
-								>
-									Services
-								</a>
-							</Link>
-						</li>
-						<li>
-							<Link href="/">
-								<a
-									className="block py-2 pr-4 pl-3 text-gray-700 font-[400] rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent
-								mobile:hover:bg-FA-Primary-purple-900 mobile:hover:text-FA-Primary-red-vivid-050"
-								>
-									Pricing
-								</a>
-							</Link>
-						</li>
-						<li>
-							<Link href="/">
-								<a
-									className="block py-2 pr-4 pl-3 text-gray-700 rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent
-								mobile:hover:bg-FA-Primary-purple-900 mobile:hover:text-FA-Primary-red-vivid-050"
-								>
-									Contact
 								</a>
 							</Link>
 						</li>
