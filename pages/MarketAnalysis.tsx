@@ -1,10 +1,11 @@
 import React from "react";
+import MarketAnalysisDataGrid from "../src/components/dataGrid/MarketAnalysisDataGrid";
 
 const MarketAnalysis = () => {
 	return (
 		<div className="w-full">
 			<h1 className="text-white text-2xl text-center">Market Analysis</h1>
-			<div className="rounded-lg   border-2 border-white w-full min-h-[60rem]">a</div>
+			<MarketAnalysisDataGrid />
 		</div>
 	);
 };

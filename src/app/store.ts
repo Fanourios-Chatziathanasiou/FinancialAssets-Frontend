@@ -4,6 +4,7 @@ import { isFocusedSlice } from '../features/isFocusedSlice'
 import { isIndicatorsModalShowingSlice } from '../features/isIndicatorsModalShowingSlice'
 import { searchInputSlice } from '../features/searchInputSlice'
 import { assetDataApi } from '../services/assetDataApi'
+import { dbAssetsTrackerApi } from '../services/dbAssetsTrackerApi'
 import { searchAssetsApi } from '../services/searchAssetsApi'
 
 
@@ -14,11 +15,12 @@ export const store = configureStore({
       isFocused: isFocusedSlice.reducer,
       isIndicatorsModalShowing: isIndicatorsModalShowingSlice.reducer,
       [searchAssetsApi.reducerPath]: searchAssetsApi.reducer,
-      [assetDataApi.reducerPath]: assetDataApi.reducer
+      [assetDataApi.reducerPath]: assetDataApi.reducer,
+      [dbAssetsTrackerApi.reducerPath]: dbAssetsTrackerApi.reducer,
 
    },
    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(searchAssetsApi.middleware).concat(assetDataApi.middleware),
+      getDefaultMiddleware().concat(searchAssetsApi.middleware).concat(assetDataApi.middleware).concat(dbAssetsTrackerApi.middleware),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
