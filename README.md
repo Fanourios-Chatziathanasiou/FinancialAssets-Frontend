@@ -6,7 +6,7 @@ Financial Assets Analyst is my University of Piraeus Masters thesis project, A f
 
 <br>
 
-## **Tech Stack**
+## **🚀 Tech Stack 🚀**
 
 <br>
 
@@ -60,5 +60,59 @@ Besides these operations, The App runs 2 scheduled tasks. One for updating the a
 
 <br>
 
-Regarding the Java Application, for each Collection we have class that represents it and it equivalent repository, in which we create our databasse handling operations through Hibernate.
-AppController stores all the API endpoints. Technical Indicators folder contains the Available indicators to perform Predictive Analysis. For charting we let React Financial Charts handle these calculations (Like EMA 20 , RSI 12 etc).
+Regarding the Java Application, for each Collection we have a class that represents it and it equivalent repository, in which we create our databasse handling operations through Hibernate.
+AppController stores all the API endpoints. Technical Indicators folder contains the available indicators to perform Predictive Analysis. For charting we let React Financial Charts handle these calculations (Like EMA 20 , RSI 12 etc).
+
+<br>
+
+# **Short details about the Frontend...**
+
+In a nutshell the main parts of the project are structured as follows.
+
+```
+Project
+│   README.md
+│     
+│
+└───src
+│   │   file011.txt
+│   │   file012.txt
+│   │
+│   └───components
+│       │   file111.txt
+│       │   file112.txt
+│       │   ...
+│   
+└───pages
+│   
+│      
+│
+└───Layout
+
+
+```
+
+* **src:** source folder containing React sub-components, the Redux Store, Slices, RTK Query API endpoints etc.
+* **pages:** NextJS' prebuilt routing system. All the pages are stored inside this directory.
+* **Layout:** Contains the shared components that surround the application on every page. This way we avoid unecessary re-renders of components that are "static", like the footer.
+
+Throughout the application, both useState, FetchAPI and Redux, RTK-Query were used. The reasons of using Redux were the following:
+
+1. Get a hands on experience with Global State Management from Redux and data caching operations.
+2. If this project ends up in production, having Redux pre-built would help scaling much faster, since Redux is not necessary for every occassion but suggested if you feel like your project has to grow for big teams of developers to manage.
+
+<br>
+
+# Todos - Tasks List 🔮
+
+### **Frontend** 👨‍💻
+
+* [ ] Replace the Modals with more Responsive - Alternative Components.
+* [ ] Replace the predictive analysis result text on the Datagrid with a gauge Chart.
+* [ ] Consider a better - more user Friendly Search Bar.
+* [ ] Tackle Responsiveness issues that have to do with working on massive Amounts of Data.
+
+### **Backend** 👨‍💻
+
+* [ ] Cleanup the API endpoints. Maybe there's more segmentation to be done in terms of code
+* [ ] Convert the return values of the API endpoints to ResponseEntities.
