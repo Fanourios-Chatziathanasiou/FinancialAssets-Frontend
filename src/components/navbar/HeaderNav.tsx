@@ -9,7 +9,6 @@ const HeaderNav: React.FC<{}> = () => {
 			<div className="container flex flex-wrap justify-between items-center mx-auto">
 				<Link href="/">
 					<a className="flex items-center">
-						<img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
 						<span className="self-center text-xl  font-[600] text-FA-Primary-blue-grey-900 whitespace-nowrap dark:text-white">
 							FA Analyst
 						</span>
@@ -77,7 +76,7 @@ const HeaderNav: React.FC<{}> = () => {
 						</li>
 
 						<li>
-							<Link href="/">
+							<Link href="/About">
 								<a
 									className="block py-2 pr-4 pl-3 text-gray-700 font-[400] rounded-md hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent
 								mobile:hover:bg-FA-Primary-purple-900 mobile:hover:text-FA-Primary-red-vivid-050"

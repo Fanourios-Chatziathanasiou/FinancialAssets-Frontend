@@ -3,7 +3,7 @@ import MarketAnalysisDataGrid from "../src/components/dataGrid/MarketAnalysisDat
 
 const MarketAnalysis = () => {
 	return (
-		<div className="w-full">
+		<div className="w-full animate-appear">
 			<h1 className="text-white text-2xl text-center">Market Analysis</h1>
 			<MarketAnalysisDataGrid />
 		</div>

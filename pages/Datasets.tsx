@@ -10,7 +10,7 @@ const Datasets = (): JSX.Element => {
 
 	return (
 		<div
-			className="w-[100%] h-[100vh] flex flex-col justify-center items-center m-auto"
+			className="w-[100%] h-[100vh] flex flex-col justify-center items-center m-auto animate-appear"
 			onClick={() => {
 				if (isFocused.value === true) {
 					if (!(document.activeElement?.tagName.toLowerCase() === "input")) {

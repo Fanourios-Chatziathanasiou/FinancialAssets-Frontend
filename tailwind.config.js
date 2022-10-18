@@ -1,3 +1,5 @@
+const { transform } = require("typescript");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: [
@@ -102,6 +104,16 @@ module.exports = {
 			},
 			boxShadow: {
 				customwhite: "rgba(0, 0, 0, 0.6) 0px 3px 5px 2px, rgba(0, 0, 0, 0.35) 0px 3px 5px 1px",
+			},
+			keyframes: {
+				appear: {
+					"0%": { opacity: 0 },
+					"50%": { opacity: 1 },
+					"100%": { opacity: 1 },
+				},
+			},
+			animation: {
+				appear: "appear 2s ease-in-out ",
 			},
 		},
 	},

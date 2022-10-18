@@ -99,7 +99,7 @@ const columns: GridColDef[] = [
 	},
 	{
 		field: "predictiveAnalysis",
-		headerName: "PredictiveAnalysis",
+		headerName: "Predictive Analysis",
 		width: 160,
 		headerAlign: "center",
 		flex: 1,
