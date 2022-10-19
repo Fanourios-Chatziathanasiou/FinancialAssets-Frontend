@@ -22,7 +22,7 @@ const About = () => {
 					Informatics from the University of Piraeus with high interest in the process of creating, maintaining font-end and
 					full-stack applications, pursuing a career in Software Engineering.
 					<br /> <br />
-					<span className="font-[700]">Financial Assets Analyst</span> is my University of Piraeus Dissertation project, A
+					<span className="font-[700]">Financial Assets Analyst</span> is my University of Piraeus masters thesis project, a
 					full-stack application giving the ability to perform basic technical analysis on US stock charts, Download datasets
 					and provide insights through a basic trading System, giving the user the abillity to decide wether there's an
 					opportunity to buy-sell financial data.
