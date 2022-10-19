@@ -63,7 +63,7 @@ const About = () => {
 					</Link>
 					<Link href="https://github.com/Fanourios-Chatziathanasiou">
 						<a target={"_blank"}>
-							<Image className="rounded-lg  " src={"/Assets/Logos/GitHub.png"} width={110} height={110} layout="fixed" />
+							<Image className="rounded-lg  " src={"/Assets/Logos/Github.png"} width={110} height={110} layout="fixed" />
 						</a>
 					</Link>
 				</div>
