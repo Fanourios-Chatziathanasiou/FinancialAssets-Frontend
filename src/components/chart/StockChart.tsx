@@ -148,7 +148,7 @@ class StockChart extends React.Component<StockChartProps> {
 								chartHeight + 30 + 30 * (index - internalIndicatorsCount) + (index - internalIndicatorsCount) * 130,
 							]}
 							height={130}
-							yExtents={this.props.indicatorsArray[index].yAccessor}
+							yExtents={this.props.indicatorsArray[index].yAccessor ? this.props.indicatorsArray[index].yAccessor : [0, 100]}
 						>
 							{IndicatorsDb({
 								...ChartInternalIndicator,

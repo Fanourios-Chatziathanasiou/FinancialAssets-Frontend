@@ -20,12 +20,11 @@ const IndicatorsEditorModal = (props: IndicatorsEditorModalTypes): JSX.Element =
 
 	//Apply method for the Modal.
 	const handleApply = () => {
-		//The generated component indicator wutg the specified parameters.
+		//The generated component indicator with the specified parameters.
 		const generatedComponent = indicatorsModalGeneratedComponentDb({
 			...indicatorParams,
 		});
-		// console.log("Generated component", generatedComponent);
-
+		console.log("Generated component", generatedComponent);
 		const isGeneratedComponentParameterUndefined = Object.values(generatedComponent).findIndex((el) => el === undefined);
 		if (isGeneratedComponentParameterUndefined !== -1) {
 			props.setIsEditorModalShowing(false);

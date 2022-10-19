@@ -45,7 +45,7 @@ const About = () => {
 					/>
 
 					<Image className="rounded-lg  " src={"/Assets/Logos/Typescript.svg"} width={300} height={110} layout="fixed" />
-					<Image className="rounded-lg  " src={"/Assets/Logos/TailwindCSS.svg"} width={460} height={60} layout="fixed" />
+					<Image className="rounded-lg  " src={"/Assets/Logos/TailwindCSS.svg"} width={300} height={40} layout="fixed" />
 				</div>
 			</article>
 			<article>

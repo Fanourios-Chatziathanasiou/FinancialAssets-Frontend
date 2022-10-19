@@ -24,7 +24,6 @@ const ChartResult = () => {
 	const dispatch = useAppDispatch();
 	//React Query fetch to get the data from our endpoint.
 	const { data, isSuccess } = useGetAssetDataByNameQuery(ChartResult as string, { skip: ChartResult === undefined });
-	console.log(ChartResult);
 
 	//When the data is ready
 	useEffect(() => {

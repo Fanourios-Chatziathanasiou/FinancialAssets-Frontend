@@ -30,9 +30,10 @@ class MACDIndicator extends React.Component<MACDIndicatorTypes> {
 	constructor(props: any) {
 		super(props);
 
-		if (typeof this.props.indicatorsArray[this.props.positionMultiplier].yAccessor === typeof []) {
+		if (typeof this.props.indicatorsArray[this.props.positionMultiplier].yAccessor !== typeof function () {}) {
 			const newel = [...this.props.indicatorsArray];
 			newel[this.props.positionMultiplier].yAccessor = this.macdCalculator.accessor();
+			console.log(newel);
 			this.props.setIndicatorsArray(newel);
 		}
 	}
