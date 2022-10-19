@@ -19,15 +19,20 @@ const IndicatorsEditorModal = (props: IndicatorsEditorModalTypes): JSX.Element =
 	}, [props.editedIndicator]);
 
 	//Apply method for the Modal.
-	const handleApply = () => {
+	const handleApply = async () => {
 		//The generated component indicator with the specified parameters.
+		// const isIndicatorParametersUndefined = Object.values(indicatorParams).findIndex((el) => el === undefined || isNaN(el));
+		// if (isIndicatorParametersUndefined !== -1) {
+		// 	return;
+		// }
 		const generatedComponent = indicatorsModalGeneratedComponentDb({
 			...indicatorParams,
 		});
-		console.log("Generated component", generatedComponent);
-		const isGeneratedComponentParameterUndefined = Object.values(generatedComponent).findIndex((el) => el === undefined);
+		const isGeneratedComponentParameterUndefined = Object.values(generatedComponent).findIndex(
+			(el) => el === undefined || el === null || el.toString() === "NaN"
+		);
 		if (isGeneratedComponentParameterUndefined !== -1) {
-			props.setIsEditorModalShowing(false);
+			alert("Please fill all the  fields.");
 			return;
 		}
 
@@ -41,7 +46,9 @@ const IndicatorsEditorModal = (props: IndicatorsEditorModalTypes): JSX.Element =
 		} else {
 			alert("This Combination does not exist in the database");
 		}
+
 		props.setIsEditorModalShowing(false);
+		props.setEditedIndicator(null);
 	};
 
 	const handleChange = (e: any) => {
