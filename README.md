@@ -107,9 +107,9 @@ Throughout the application, both useState, FetchAPI and Redux, RTK-Query were us
 
 ### **Frontend** 👨‍💻
 
+* [x] Consider a better - more user Friendly Search Bar.
 * [ ] Replace the Modals with more Responsive - Alternative Components.
 * [ ] Replace the predictive analysis result text on the Datagrid with a gauge Chart.
-* [ ] Consider a better - more user Friendly Search Bar.
 * [ ] Tackle Responsiveness issues that have to do with working on massive Amounts of Data.
 
 ### **Backend** 👨‍💻
