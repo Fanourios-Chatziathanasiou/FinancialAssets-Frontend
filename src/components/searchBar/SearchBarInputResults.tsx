@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import internal from "stream";
 import { useAppSelector } from "../../app/hooks";
 import { updateIsFocused } from "../../features/isFocusedSlice";
 import { searchAssetsType } from "../../types/typesCollection";
@@ -10,6 +11,8 @@ type searchBaInputTypes = {
 	// isFocused: boolean;
 	inputValue: string;
 	inputClickedPath: string;
+	focusedIndex: number;
+	routerPathName: string;
 };
 
 export const SearchBarInputResults = React.memo(
@@ -23,28 +26,31 @@ export const SearchBarInputResults = React.memo(
 						id="searchResults"
 						className="p-0  max-h-96  rounded-b-lg w-[100%] bg-FA-Primary-blue-grey-050 overflow-y-scroll "
 					>
-						{isFocused.value && props.data && props.data.length > 0
+						{isFocused.value && props.data && props.data.length > 0 && props.inputValue !== ""
 							? props.data.map((obj: any, index: number) => {
 									return (
-										<li
-											key={index}
-											className=" p-3  text-sm font-[600] text-FA-Primary-blue-grey-900  hover:bg-FA-Primary-blue-grey-600 hover:text-white cursor-pointer"
+										<Link
+											href={
+												props.inputClickedPath === `/Datasets/search/`
+													? `${props.routerPathName}/${obj.name}`
+													: `${props.routerPathName}/${obj.symbol}`
+											}
+											onClick={() => {
+												dispatch(updateIsFocused(false));
+											}}
 										>
-											<Link
-												href={
-													props.inputClickedPath === `/Datasets/search/`
-														? `/Datasets/search/${obj.name}`
-														: `/chart/${obj.exchange}/${obj.symbol}`
-												}
-												onClick={() => {
-													dispatch(updateIsFocused(false));
+											<li
+												style={{
+													backgroundColor: index === props.focusedIndex ? "rgba(0,0,0,0.1)" : "",
 												}}
+												key={index}
+												className=" p-3  text-sm font-[600] text-FA-Primary-blue-grey-900  hover:bg-FA-Primary-blue-grey-600 hover:text-white cursor-pointer"
 											>
 												<a>
 													{obj.name} - Symbol: {obj.symbol}
 												</a>
-											</Link>
-										</li>
+											</li>
+										</Link>
 									);
 							  })
 							: ""}

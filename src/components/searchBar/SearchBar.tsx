@@ -1,8 +1,10 @@
+import { keys } from "@mui/system";
+import next from "next";
 import Link from "next/link";
 import Router from "next/router";
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { updateIsFocused } from "../../features/isFocusedSlice";
+import { selectIsFocused, updateIsFocused } from "../../features/isFocusedSlice";
 import { updateInput } from "../../features/searchInputSlice";
 import { useGetSearchAssetsByNameQuery } from "../../services/searchAssetsApi";
 import SearchBarInputResults from "./SearchBarInputResults";
@@ -12,12 +14,14 @@ const SearchBar: React.FC<{ RouterPathName: string }> = ({ RouterPathName }) => 
 	const timer = useRef<any>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 
+	useEffect(() => {
+		dispatch(updateInput(""));
+	}, []);
 	const inputValue = useAppSelector((state) => state.searchInput.value);
-	const { data } = useGetSearchAssetsByNameQuery(inputValue, {
+	let { data } = useGetSearchAssetsByNameQuery(inputValue, {
 		skip: inputValue === "",
 	});
 	const dispatch = useAppDispatch();
-	// const [isFocused, setIsFocused] = useState<boolean>(false);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		clearTimeout(timer.current);
@@ -26,17 +30,46 @@ const SearchBar: React.FC<{ RouterPathName: string }> = ({ RouterPathName }) => 
 		}, 50);
 	};
 
-	const handleKeyDown = (e: React.KeyboardEvent) => {
-		if (e.key === "Enter" && inputValue !== "") {
-			dispatch(updateIsFocused(false));
-			Router.push(RouterPathName + inputValue);
+	const [focusedIndex, setFocusedIndex] = useState(-1);
+	const resetSearchComplete = useCallback(() => {
+		setFocusedIndex(-1);
+		dispatch(updateIsFocused(false));
+	}, []);
+	const handleKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
+		const { key } = e;
+		let nextIndexCount = -1;
+
+		// move down
+		if (key === "ArrowDown") {
+			e.preventDefault();
+			data ? (nextIndexCount = (focusedIndex + 1) % data.length) : "";
 		}
-		if (e.key === "ArrowDown") {
-			console.log(document.activeElement?.attributes);
+
+		// move up
+		if (key === "ArrowUp") {
+			e.preventDefault();
+			if (focusedIndex === -1 && data) {
+				setFocusedIndex(data.length - 1);
+				return;
+			}
+
+			data ? (nextIndexCount = (focusedIndex + data.length - 1) % data.length) : "";
 		}
-		if (e.key === "ArrowUp") {
-			e.preventDefault;
+
+		// hide search results
+		if (key === "Escape") {
+			resetSearchComplete();
 		}
+
+		// select the current item
+		if (key === "Enter") {
+			e.preventDefault();
+			if (inputValue !== "") {
+				Router.push(RouterPathName + inputValue);
+			}
+		}
+
+		setFocusedIndex(nextIndexCount);
 	};
 
 	return (
@@ -48,17 +81,14 @@ const SearchBar: React.FC<{ RouterPathName: string }> = ({ RouterPathName }) => 
 						dispatch(updateIsFocused(true));
 					}
 				}}
-				tabIndex={0}
+				tabIndex={-1}
+				onKeyDown={handleKeyDown}
 			>
 				<div className={"w-[100%] flex flex-col  rounded-lg shadow-customwhite"}>
 					<div
 						className={
 							"flex flex-row w-[100%] bg-[rgb(248,248,248)]  rounded-lg  " +
-							(isFocused.value == true &&
-							data &&
-							data?.length > 0 &&
-							inputRef.current?.value &&
-							inputRef.current?.value.length > 0
+							(isFocused.value == true && data && data?.length > 0 && inputValue && inputValue.length > 0
 								? "rounded-br-none "
 								: "")
 						}
@@ -67,23 +97,20 @@ const SearchBar: React.FC<{ RouterPathName: string }> = ({ RouterPathName }) => 
 							ref={inputRef}
 							className={
 								" w-[92%] p-l-2  text-[2.6rem]  font-[300] rounded-l-lg border-none bg-[rgb(248,248,248)] " +
-								(isFocused.value == true &&
-								data &&
-								data?.length > 0 &&
-								inputRef.current?.value &&
-								inputRef.current?.value.length > 0
+								(isFocused.value == true && data && data?.length > 0 && inputValue && inputValue.length > 0
 									? "rounded-b-none rounded-r-none "
 									: "")
 							}
 							type="text"
-							defaultValue={inputValue}
+							defaultValue={""}
 							name="searchInput"
 							autoComplete="off"
 							id=""
 							maxLength={30}
 							placeholder="Search FA by Ticker or Name..."
 							onChange={handleInputChange}
-							onKeyDown={handleKeyDown}
+
+							// onKeyDown={handleKeyDownForSearch}
 						/>
 						<button
 							type="button"
@@ -105,7 +132,13 @@ const SearchBar: React.FC<{ RouterPathName: string }> = ({ RouterPathName }) => 
 							<img src="Assets/searchIcon.png" alt="searchIcon" className="w-[100%] p-0 border-none bg-none " />
 						</button>
 					</div>
-					<SearchBarInputResults data={data} inputValue={inputValue} inputClickedPath={RouterPathName} />
+					<SearchBarInputResults
+						data={data}
+						inputValue={inputValue}
+						inputClickedPath={RouterPathName}
+						focusedIndex={focusedIndex}
+						routerPathName={RouterPathName}
+					/>
 				</div>
 			</div>
 		</div>

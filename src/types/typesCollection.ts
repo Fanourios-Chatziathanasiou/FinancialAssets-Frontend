@@ -7,7 +7,7 @@ export type searchAssetsType = {
     "mic_code": string,
     "country": string,
     "type": string
-}
+} | null
 
 
 export type candlestickValueType =
