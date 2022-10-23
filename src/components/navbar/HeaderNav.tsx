@@ -4,7 +4,8 @@ import Link from "next/link";
 import useWindowDimensions from "../../tools/useWindowDimensions";
 const HeaderNav: React.FC<{}> = () => {
 	const [isMenu, setMenu] = useState<boolean>(false);
-	const { width } = useWindowDimensions();
+
+	const width = useWindowDimensions();
 	useEffect(() => {
 		if (width >= 768) {
 			setMenu(false);

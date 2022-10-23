@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/.d.ts","**/**/*.ts","**/**/*.tsx","./pages/**/[*].tsx","**/**/**/*.ts","**/**/**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/.d.ts","**/**/*.ts","**/**/*.tsx","./pages/**/[*].tsx","**/**/**/*.ts","**/**/**/*.tsx", "src/tools/useWindowDimensions.tsx"],
   "exclude": ["node_modules"]
 }
