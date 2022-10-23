@@ -65,7 +65,11 @@ const SearchBar: React.FC<{ RouterPathName: string }> = ({ RouterPathName }) => 
 		if (key === "Enter") {
 			e.preventDefault();
 			if (inputValue !== "") {
-				Router.push(RouterPathName + inputValue);
+				if (focusedIndex == -1) {
+					Router.push(RouterPathName + inputValue);
+				} else if (data) {
+					Router.push(RouterPathName + data[focusedIndex].symbol);
+				}
 			}
 		}
 
@@ -80,8 +84,9 @@ const SearchBar: React.FC<{ RouterPathName: string }> = ({ RouterPathName }) => 
 					if (isFocused.value === false) {
 						dispatch(updateIsFocused(true));
 					}
+					setFocusedIndex(-1);
 				}}
-				tabIndex={-1}
+				tabIndex={1}
 				onKeyDown={handleKeyDown}
 			>
 				<div className={"w-[100%] flex flex-col  rounded-lg shadow-customwhite"}>

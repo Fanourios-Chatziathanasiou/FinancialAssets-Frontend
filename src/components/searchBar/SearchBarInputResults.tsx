@@ -19,6 +19,14 @@ export const SearchBarInputResults = React.memo(
 	(props: searchBaInputTypes) => {
 		const isFocused = useAppSelector((state) => state.isFocused);
 		const dispatch = useDispatch();
+		const resultContainer = useRef<HTMLLIElement>(null);
+		useEffect(() => {
+			if (!resultContainer.current) return;
+
+			resultContainer.current.scrollIntoView({
+				block: "nearest",
+			});
+		}, [props.focusedIndex]);
 		return (
 			<>
 				{isFocused.value && props.data && props.data.length > 0 && props.inputValue !== "" ? (
@@ -40,11 +48,13 @@ export const SearchBarInputResults = React.memo(
 											}}
 										>
 											<li
+												ref={index === props.focusedIndex ? resultContainer : null}
 												style={{
-													backgroundColor: index === props.focusedIndex ? "rgba(0,0,0,0.1)" : "",
+													backgroundColor: index === props.focusedIndex ? "rgb(72 101 129 / var(--tw-bg-opacity))" : "",
+													color: index === props.focusedIndex ? "white" : "",
 												}}
 												key={index}
-												className=" p-3  text-sm font-[600] text-FA-Primary-blue-grey-900  hover:bg-FA-Primary-blue-grey-600 hover:text-white cursor-pointer"
+												className=" p-3  text-sm font-[600] text-FA-Primary-blue-grey-900  hover:bg-FA-Primary-blue-grey-400 hover:text-white cursor-pointer"
 											>
 												<a>
 													{obj.name} - Symbol: {obj.symbol}
