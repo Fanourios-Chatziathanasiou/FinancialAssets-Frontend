@@ -14,11 +14,11 @@ const SearchResults = () => {
 
 	return (
 		<>
-			<h1 className="text-white text-xl p-10 font-[400]">
+			<h1 className="text-white text-xl p-10 font-[400] ">
 				Search results for{" "}
 				<span className="font-[300] italic text-xl text-FA-Primary-yellow-vivid-400">{SearchResults}</span>
 			</h1>
-			<div className="max-w-[1440px] w-[100%] grid grid-cols-auto-fit justify-items-center align-center  gap-36">
+			<div className="max-w-[1440px] w-[100%] grid grid-cols-auto-fit justify-items-center align-center  gap-36 mb-6">
 				{data?.slice(0, 20).map((searchResultElement: searchAssetsType, index: number) => {
 					return (
 						<DatasetSearchResultsCard
